@@ -3,15 +3,6 @@
 import { useState } from 'react'
 import { Button } from '@/components/ui/button'
 import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogHeader,
-  AlertDialogTitle,
-} from '@/components/ui/alert-dialog'
-import {
   Table,
   TableBody,
   TableCell,
@@ -22,6 +13,7 @@ import {
 import { Badge } from '@/components/ui/badge'
 import { Copy, Trash2, AlertCircle, Plus } from 'lucide-react'
 import { useToast } from '@/hooks/use-toast'
+import { RevokeAPIKeyModal } from '@/components/dashboard/modals'
 
 interface APIKey {
   id: string
@@ -79,14 +71,7 @@ export default function APIPage() {
     setRevokeDialog({ open: true, keyId })
   }
 
-  const handleRevokeConfirm = () => {
-    if (revokeDialog.keyId) {
-      setApiKeys(apiKeys.filter((key) => key.id !== revokeDialog.keyId))
-      toast({
-        title: 'Key revoked',
-        description: 'The API key has been permanently revoked.',
-      })
-    }
+  const handleRevokeClose = () => {
     setRevokeDialog({ open: false, keyId: null })
   }
 
@@ -216,28 +201,12 @@ export default function APIPage() {
         </div>
       </div>
 
-      {/* Revoke Confirmation Dialog */}
-      <AlertDialog open={revokeDialog.open} onOpenChange={(open) => setRevokeDialog({ ...revokeDialog, open })}>
-        <AlertDialogContent className="bg-[#12121A] border-[#1E1E2E]">
-          <AlertDialogHeader>
-            <AlertDialogTitle className="text-[#F8FAFC]">Revoke API Key?</AlertDialogTitle>
-            <AlertDialogDescription className="text-[#94A3B8]">
-              This action cannot be undone. Integrations using this key will immediately lose access.
-            </AlertDialogDescription>
-          </AlertDialogHeader>
-          <div className="flex gap-3 mt-6 justify-end">
-            <AlertDialogCancel className="border-[#1E1E2E] text-[#D4A017] hover:bg-[#1E1E2E]">
-              Cancel
-            </AlertDialogCancel>
-            <AlertDialogAction
-              onClick={handleRevokeConfirm}
-              className="bg-[#E84242] hover:bg-[#E84242]/80 text-white"
-            >
-              Revoke
-            </AlertDialogAction>
-          </div>
-        </AlertDialogContent>
-      </AlertDialog>
+      {/* Revoke API Key Modal */}
+      <RevokeAPIKeyModal 
+        isOpen={revokeDialog.open} 
+        onClose={handleRevokeClose}
+        keyName={apiKeys.find(k => k.id === revokeDialog.keyId)?.environment || 'Production'}
+      />
     </div>
   )
 }

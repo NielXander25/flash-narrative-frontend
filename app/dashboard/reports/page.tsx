@@ -1,125 +1,227 @@
 'use client'
 
-import { Button } from '@/components/ui/button'
-import { Download, FileText, Calendar } from 'lucide-react'
+import { useState } from 'react'
+import { Plus, Download, Eye, MoreVertical, AlertCircle } from 'lucide-react'
 
 interface Report {
   id: string
-  name: string
+  projectName: string
+  client: string
   generatedDate: string
-  type: 'Executive' | 'Full' | 'Custom'
-  size: string
+  kpiScore: string
+  trend: string
+  status: 'completed' | 'processing' | 'failed'
 }
 
-const mockReports: Report[] = [
-  {
-    id: '1',
-    name: 'Q1 2026 Executive Summary',
-    generatedDate: '2026-03-01',
-    type: 'Executive',
-    size: '2.4 MB',
-  },
-  {
-    id: '2',
-    name: 'February 2026 Full Report',
-    generatedDate: '2026-02-28',
-    type: 'Full',
-    size: '12.8 MB',
-  },
-  {
-    id: '3',
-    name: 'Crisis Analysis Report',
-    generatedDate: '2026-02-15',
-    type: 'Custom',
-    size: '3.1 MB',
-  },
-]
-
 export default function ReportsPage() {
-  const handleGeneratePDF = () => {
-    console.log('Generating PDF...')
-    // POST /api/v1/reports/generate/pdf
-  }
-
-  const handleDownloadReport = (reportId: string) => {
-    console.log('Downloading report:', reportId)
-    // GET /api/v1/reports/{reportId}/download
-  }
+  const [showTemplateModal, setShowTemplateModal] = useState(false)
+  const [reports, setReports] = useState<Report[]>([
+    {
+      id: '1',
+      projectName: 'Zenith Bank Q2',
+      client: 'Zenith',
+      generatedDate: 'Jun 1, 2026',
+      kpiScore: '85.2 kA',
+      trend: '+5.2%',
+      status: 'completed'
+    },
+    {
+      id: '2',
+      projectName: 'GTBank Product Launch',
+      client: 'GTBank',
+      generatedDate: 'May 15, 2026',
+      kpiScore: '92.1 kA',
+      trend: '+8.3%',
+      status: 'completed'
+    },
+    {
+      id: '3',
+      projectName: 'Dangote Brand Monitor',
+      client: 'Dangote',
+      generatedDate: 'May 8, 2026',
+      kpiScore: '78.9 kA',
+      trend: '-2.1%',
+      status: 'completed'
+    },
+    {
+      id: '4',
+      projectName: 'MTN Crisis Response',
+      client: 'MTN',
+      generatedDate: 'Apr 22, 2026',
+      kpiScore: '65.4 kA',
+      trend: '-12.5%',
+      status: 'completed'
+    }
+  ])
 
   return (
-    <div className="flex flex-col h-full">
+    <div className="bg-[#0A0A0F] min-h-screen">
       {/* Header */}
-      <div className="bg-[#12121A] border-b border-[#1E1E2E] px-8 py-6 flex items-center justify-between">
-        <div>
-          <h1 className="text-3xl font-bold text-[#F8FAFC] mb-2">Reports</h1>
-          <p className="text-[#94A3B8]">Generate and download your intelligence reports</p>
+      <div className="border-b border-[#1E1E2E] px-8 py-6">
+        <div className="flex items-center justify-between">
+          <div>
+            <h1 className="text-4xl font-bold text-[#F8FAFC]">Reports Command Center</h1>
+            <p className="text-[#94A3B8] mt-2">Build, support and send client presentations.</p>
+          </div>
+          <button 
+            onClick={() => setShowTemplateModal(true)}
+            className="flex items-center gap-2 px-6 py-3 bg-[#D4A017] hover:bg-[#E6B420] text-[#0A0A0F] rounded-lg font-semibold transition-colors"
+          >
+            <Plus className="w-5 h-5" />
+            + New Report
+          </button>
         </div>
-        <Button
-          onClick={handleGeneratePDF}
-          className="bg-[#D4A017] hover:bg-[#E6B420] text-[#0A0A0F] font-semibold flex items-center gap-2 h-10"
-        >
-          <FileText className="w-4 h-4" />
-          Generate Executive PDF
-        </Button>
       </div>
 
-      {/* Content */}
-      <div className="flex-1 overflow-auto p-8">
-        <div className="max-w-4xl">
-          {mockReports.length > 0 ? (
-            <div className="space-y-4">
-              {mockReports.map((report) => (
-                <div
-                  key={report.id}
-                  className="bg-[#12121A] border border-[#1E1E2E] rounded-lg p-6 flex items-center justify-between hover:border-[#D4A017] transition-colors"
-                >
-                  <div className="flex items-center gap-4 flex-1">
-                    <div className="w-12 h-12 rounded-lg bg-[#1E1E2E] flex items-center justify-center flex-shrink-0">
-                      <FileText className="w-6 h-6 text-[#D4A017]" />
-                    </div>
-                    <div className="flex-1">
-                      <h3 className="text-[#F8FAFC] font-semibold mb-1">{report.name}</h3>
-                      <div className="flex items-center gap-4">
-                        <p className="text-[#94A3B8] text-sm flex items-center gap-1">
-                          <Calendar className="w-4 h-4" />
-                          {new Date(report.generatedDate).toLocaleDateString('en-US', {
-                            year: 'numeric',
-                            month: 'short',
-                            day: 'numeric',
-                          })}
-                        </p>
-                        <span className="px-2.5 py-0.5 bg-[#1E1E2E] text-[#94A3B8] text-xs font-semibold rounded">
-                          {report.type}
-                        </span>
-                        <span className="text-[#5B8FD4] text-sm">{report.size}</span>
-                      </div>
+      <div className="p-8">
+        {/* Table Header */}
+        <div className="mb-6">
+          <div className="grid grid-cols-7 gap-4 px-6 py-4 bg-[#1E1E2E] rounded-t-lg border border-[#1E1E2E] text-[#94A3B8] text-sm font-semibold uppercase">
+            <div>Project</div>
+            <div>Client</div>
+            <div>KPI Score</div>
+            <div>Trend</div>
+            <div>Status</div>
+            <div>Generated</div>
+            <div>Actions</div>
+          </div>
+
+          {/* Table Body */}
+          {reports.length > 0 ? (
+            <div className="border border-t-0 border-[#1E1E2E] rounded-b-lg divide-y divide-[#1E1E2E]">
+              {reports.map((report, idx) => (
+                <div key={report.id} className="grid grid-cols-7 gap-4 px-6 py-4 items-center bg-[#12121A] hover:bg-[#1E1E2E] transition-colors">
+                  {/* Project Name */}
+                  <div>
+                    <p className="text-[#F8FAFC] font-medium">{report.projectName}</p>
+                  </div>
+
+                  {/* Client */}
+                  <div>
+                    <div className="w-8 h-8 rounded bg-[#D4A017] flex items-center justify-center text-[#0A0A0F] text-xs font-bold">
+                      {report.client.charAt(0)}
                     </div>
                   </div>
-                  <Button
-                    onClick={() => handleDownloadReport(report.id)}
-                    className="bg-[#D4A017] hover:bg-[#E6B420] text-[#0A0A0F] font-semibold flex items-center gap-2 h-10"
-                  >
-                    <Download className="w-4 h-4" />
-                    Download
-                  </Button>
+
+                  {/* KPI Score */}
+                  <div>
+                    <p className="text-[#F8FAFC] font-semibold">{report.kpiScore}</p>
+                  </div>
+
+                  {/* Trend */}
+                  <div>
+                    <span className={`px-3 py-1 rounded text-xs font-semibold ${
+                      report.trend.startsWith('+') 
+                        ? 'bg-[#2ECC8A]/20 text-[#2ECC8A]' 
+                        : 'bg-[#E8832A]/20 text-[#E8832A]'
+                    }`}>
+                      {report.trend}
+                    </span>
+                  </div>
+
+                  {/* Status */}
+                  <div>
+                    <span className="px-3 py-1 rounded text-xs font-semibold bg-[#2ECC8A]/20 text-[#2ECC8A]">
+                      Completed
+                    </span>
+                  </div>
+
+                  {/* Generated Date */}
+                  <div>
+                    <p className="text-[#94A3B8] text-sm">{report.generatedDate}</p>
+                  </div>
+
+                  {/* Actions */}
+                  <div className="flex items-center gap-2">
+                    <button className="p-2 hover:bg-[#252535] rounded transition-colors text-[#94A3B8] hover:text-[#D4A017]">
+                      <Eye className="w-4 h-4" />
+                    </button>
+                    <button className="p-2 hover:bg-[#252535] rounded transition-colors text-[#94A3B8] hover:text-[#D4A017]">
+                      <Download className="w-4 h-4" />
+                    </button>
+                    <button className="p-2 hover:bg-[#252535] rounded transition-colors text-[#94A3B8] hover:text-[#D4A017]">
+                      <MoreVertical className="w-4 h-4" />
+                    </button>
+                  </div>
                 </div>
               ))}
             </div>
           ) : (
-            <div className="bg-[#12121A] border border-[#1E1E2E] rounded-lg p-12 text-center">
-              <FileText className="w-12 h-12 text-[#5B8FD4] mx-auto mb-4" />
-              <h3 className="text-[#F8FAFC] font-semibold mb-2">No reports yet</h3>
-              <p className="text-[#94A3B8] text-sm mb-6">Generate your first report to get started</p>
-              <Button
-                onClick={handleGeneratePDF}
-                className="bg-[#D4A017] hover:bg-[#E6B420] text-[#0A0A0F] font-semibold"
-              >
-                Generate Report
-              </Button>
+            <div className="border border-t-0 border-[#1E1E2E] rounded-b-lg p-12 bg-[#12121A]">
+              <div className="text-center">
+                <AlertCircle className="w-12 h-12 text-[#D4A017] mx-auto mb-4 opacity-50" />
+                <p className="text-[#F8FAFC] font-semibold mb-2">No reports generated yet</p>
+                <p className="text-[#94A3B8] text-sm mb-6">Start by selecting a command and clicking Build to generate your first professional report.</p>
+                <button 
+                  onClick={() => setShowTemplateModal(true)}
+                  className="inline-flex items-center gap-2 px-6 py-3 bg-[#D4A017] hover:bg-[#E6B420] text-[#0A0A0F] rounded-lg font-semibold transition-colors"
+                >
+                  <Plus className="w-5 h-5" />
+                  + New Report
+                </button>
+              </div>
             </div>
           )}
         </div>
+
+        {/* Generate Report Button */}
+        <div className="mt-8">
+          <button className="flex items-center gap-2 px-6 py-3 bg-[#D4A017] hover:bg-[#E6B420] text-[#0A0A0F] rounded-lg font-semibold transition-colors">
+            <AlertCircle className="w-5 h-5" />
+            Generate Report
+          </button>
+        </div>
       </div>
+
+      {/* Template Selection Modal */}
+      {showTemplateModal && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+          <div className="bg-[#12121A] rounded-lg border border-[#1E1E2E] p-12 max-w-lg w-full mx-4">
+            <h2 className="text-2xl font-bold text-[#F8FAFC] text-center mb-2">HOW WOULD YOU LIKE TO BUILD THIS REPORT?</h2>
+            <p className="text-[#94A3B8] text-center text-sm mb-8">Select a structural foundation for your executive intelligence briefing. Our Flash Narrative engine prioritizes real-time signal analysis.</p>
+
+            <div className="space-y-4 mb-8">
+              {/* Option 1 */}
+              <div className="border-2 border-[#1E1E2E] rounded-lg p-6 hover:border-[#D4A017] cursor-pointer transition-colors">
+                <div className="flex items-start gap-4">
+                  <div className="w-12 h-12 rounded-lg bg-[#D4A017] flex items-center justify-center flex-shrink-0 text-[#0A0A0F] text-lg">
+                    ⚡
+                  </div>
+                  <div>
+                    <h3 className="text-[#F8FAFC] font-bold mb-1">Use Flash Narrative Default</h3>
+                    <p className="text-[#94A3B8] text-sm">Advanced Intelligence using our proprietary Flash algorithm.</p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Option 2 */}
+              <div className="border-2 border-[#1E1E2E] rounded-lg p-6 hover:border-[#D4A017] cursor-pointer transition-colors">
+                <div className="flex items-start gap-4">
+                  <div className="w-12 h-12 rounded-lg bg-[#D4A017] flex items-center justify-center flex-shrink-0 text-[#0A0A0F] text-lg">
+                    📄
+                  </div>
+                  <div>
+                    <h3 className="text-[#F8FAFC] font-bold mb-1">Upload Custom Template</h3>
+                    <p className="text-[#94A3B8] text-sm">Utilize your firm&apos;s custom identity and reporting architecture to execute distribution.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="flex gap-4">
+              <button 
+                onClick={() => setShowTemplateModal(false)}
+                className="flex-1 px-6 py-3 border border-[#1E1E2E] text-[#F8FAFC] rounded-lg font-semibold hover:bg-[#1E1E2E] transition-colors"
+              >
+                Cancel
+              </button>
+              <button className="flex-1 px-6 py-3 bg-[#D4A017] hover:bg-[#E6B420] text-[#0A0A0F] rounded-lg font-semibold transition-colors">
+                GET STARTED
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   )
 }

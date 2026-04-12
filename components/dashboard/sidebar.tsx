@@ -1,6 +1,8 @@
 'use client'
 
 import Link from 'next/link'
+import Image from 'next/image'
+import { usePathname } from 'next/navigation'
 import { LucideIcon } from 'lucide-react'
 import { useState } from 'react'
 
@@ -18,27 +20,33 @@ interface SidebarProps {
 
 export function Sidebar({ collapsed, items }: SidebarProps) {
   const [workspaceMenu, setWorkspaceMenu] = useState(false)
+  const pathname = usePathname()
 
   return (
     <div className="w-64 bg-[#12121A] border-r border-[#1E1E2E] flex flex-col p-6 h-screen overflow-y-auto">
       {/* Logo */}
       <div className="flex items-center gap-3 mb-8">
-        <div className="w-10 h-10 rounded-full bg-[#D4A017] flex items-center justify-center flex-shrink-0">
-          <span className="text-[#0A0A0F] font-bold">F</span>
-        </div>
-        <span className="text-[#F8FAFC] font-bold text-lg">Flash</span>
+        <Image 
+          src="/logo.png" 
+          alt="Flash Narrative" 
+          width={40} 
+          height={40}
+          className="rounded-lg"
+        />
+        <span className="text-[#F8FAFC] font-bold text-lg">FLASH</span>
       </div>
 
       {/* Navigation Items */}
       <nav className="flex-1 space-y-2 mb-8">
         {items.map((item) => {
           const Icon = item.icon
+          const isActive = pathname === item.href || pathname.startsWith(item.href + '/')
           return (
             <Link
               key={item.href}
               href={item.href}
               className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${
-                item.active
+                isActive
                   ? 'bg-[#D4A017] text-[#0A0A0F] font-semibold'
                   : 'text-[#94A3B8] hover:bg-[#1E1E2E] hover:text-[#F8FAFC]'
               }`}

@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { Sidebar } from '@/components/dashboard/sidebar'
-import { Command, BarChart3, Settings, FileText } from 'lucide-react'
+import { Command, BarChart3, Settings, FileText, Compass } from 'lucide-react'
 
 export default function DashboardLayout({
   children,
@@ -12,9 +12,10 @@ export default function DashboardLayout({
   const [collapsed, setCollapsed] = useState(false)
 
   const navItems = [
-    { label: 'Dashboard', icon: BarChart3, href: '/dashboard', active: true },
+    { label: 'Command Center', icon: Compass, href: '/dashboard/command-center', active: false },
+    { label: 'Intelligence Dashboard', icon: BarChart3, href: '/dashboard', active: false },
     { label: 'Reports', icon: FileText, href: '/dashboard/reports', active: false },
-    { label: 'API Management', icon: Command, href: '/dashboard/api', active: false },
+    { label: 'API & Integrations', icon: Command, href: '/dashboard/api', active: false },
     { label: 'Settings', icon: Settings, href: '/dashboard/settings', active: false },
   ]
 
