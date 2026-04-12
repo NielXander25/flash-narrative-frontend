@@ -3,11 +3,15 @@
 import { Button } from '@/components/ui/button'
 import { Mail, Check } from 'lucide-react'
 import Image from 'next/image'
+import { useRouter } from 'next/navigation'
 
 export default function LoginPage() {
+  const router = useRouter()
+
   const handleGoogleSSO = () => {
     // In production, redirect to backend: window.location.href = '/api/auth/google/login'
-    console.log('Redirect to Google SSO')
+    // For now, redirect to command center to preview
+    router.push('/dashboard/command-center')
   }
 
   return (
@@ -25,9 +29,14 @@ export default function LoginPage() {
         <div className="relative z-10">
           {/* Logo */}
           <div className="flex items-center gap-3 mb-16">
-            <div className="w-10 h-10 rounded-full bg-[#D4A017] flex items-center justify-center">
-              <span className="text-[#0A0A0F] font-bold text-lg">F</span>
-            </div>
+            <Image 
+              src="/logo.png" 
+              alt="Flash Narrative" 
+              width={40} 
+              height={40}
+              className="rounded-lg"
+              style={{ width: 'auto', height: 'auto' }}
+            />
             <span className="text-[#F8FAFC] font-bold text-lg">Flash Narrative</span>
           </div>
 
@@ -63,9 +72,14 @@ export default function LoginPage() {
           {/* Mobile Logo */}
           <div className="lg:hidden mb-8">
             <div className="flex items-center gap-3 mb-8">
-              <div className="w-10 h-10 rounded-full bg-[#D4A017] flex items-center justify-center">
-                <span className="text-[#0A0A0F] font-bold text-lg">F</span>
-              </div>
+              <Image 
+                src="/logo.png" 
+                alt="Flash Narrative" 
+                width={40} 
+                height={40}
+                className="rounded-lg"
+                style={{ width: 'auto', height: 'auto' }}
+              />
               <span className="text-[#F8FAFC] font-bold text-lg">Flash Narrative</span>
             </div>
           </div>

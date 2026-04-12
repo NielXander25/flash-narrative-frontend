@@ -32,6 +32,7 @@ export function Sidebar({ collapsed, items }: SidebarProps) {
           width={40} 
           height={40}
           className="rounded-lg"
+          style={{ width: 'auto', height: 'auto' }}
         />
         <span className="text-[#F8FAFC] font-bold text-lg">FLASH</span>
       </div>
