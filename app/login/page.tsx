@@ -29,14 +29,15 @@ export default function LoginPage() {
         <div className="relative z-10">
           {/* Logo */}
           <div className="flex items-center gap-3 mb-16">
-            <Image 
-              src="/logo.png" 
-              alt="Flash Narrative" 
-              width={40} 
-              height={40}
-              className="rounded-lg"
-              style={{ width: 'auto', height: 'auto' }}
-            />
+            <div className="w-9 h-9 rounded-full overflow-hidden flex-shrink-0 flex items-center justify-center bg-gradient-to-br from-[#D4A017] to-[#B8860B]">
+              <Image 
+                src="/logo.png" 
+                alt="Flash Narrative" 
+                width={36} 
+                height={36}
+                className="w-8 h-8 object-cover"
+              />
+            </div>
             <span className="text-[#F8FAFC] font-bold text-lg">Flash Narrative</span>
           </div>
 
@@ -72,14 +73,15 @@ export default function LoginPage() {
           {/* Mobile Logo */}
           <div className="lg:hidden mb-8">
             <div className="flex items-center gap-3 mb-8">
-              <Image 
-                src="/logo.png" 
-                alt="Flash Narrative" 
-                width={40} 
-                height={40}
-                className="rounded-lg"
-                style={{ width: 'auto', height: 'auto' }}
-              />
+              <div className="w-9 h-9 rounded-full overflow-hidden flex-shrink-0 flex items-center justify-center bg-gradient-to-br from-[#D4A017] to-[#B8860B]">
+                <Image 
+                  src="/logo.png" 
+                  alt="Flash Narrative" 
+                  width={36} 
+                  height={36}
+                  className="w-8 h-8 object-cover"
+                />
+              </div>
               <span className="text-[#F8FAFC] font-bold text-lg">Flash Narrative</span>
             </div>
           </div>

@@ -26,14 +26,15 @@ export function Sidebar({ collapsed, items }: SidebarProps) {
     <div className="w-64 bg-[#12121A] border-r border-[#1E1E2E] flex flex-col p-6 h-screen overflow-y-auto">
       {/* Logo */}
       <div className="flex items-center gap-3 mb-8">
-        <Image 
-          src="/logo.png" 
-          alt="Flash Narrative" 
-          width={40} 
-          height={40}
-          className="rounded-lg"
-          style={{ width: 'auto', height: 'auto' }}
-        />
+        <div className="w-9 h-9 rounded-full overflow-hidden flex-shrink-0 flex items-center justify-center bg-gradient-to-br from-[#D4A017] to-[#B8860B]">
+          <Image 
+            src="/logo.png" 
+            alt="Flash Narrative" 
+            width={36} 
+            height={36}
+            className="w-8 h-8 object-cover"
+          />
+        </div>
         <span className="text-[#F8FAFC] font-bold text-lg">FLASH</span>
       </div>
 
