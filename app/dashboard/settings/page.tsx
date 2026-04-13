@@ -9,7 +9,7 @@ export default function SettingsPage() {
   const [workspaceName, setWorkspaceName] = useState('Zenith Bank')
   const [primaryColor, setPrimaryColor] = useState('#D4A017')
   const [secondaryColor, setSecondaryColor] = useState('#E6B420')
-  const [logoUrl, setLogoUrl] = useState(null)
+  const [logoUrl, setLogoUrl] = useState<string | null>(null)
   const { toast } = useToast()
 
   const handleLogoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
