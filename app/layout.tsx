@@ -12,10 +12,11 @@ export const metadata: Metadata = {
   themeColor: '#D4A017',
   icons: {
     icon: [
+      { url: '/logo.png', type: 'image/png', sizes: '192x192' },
       { url: '/favicon.ico', type: 'image/x-icon' },
-      { url: '/favicon.png', type: 'image/png', sizes: '192x192' },
     ],
-    apple: '/apple-touch-icon.png',
+    apple: '/logo.png',
+    shortcut: '/logo.png',
   },
 }
 
@@ -26,6 +27,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <link rel="icon" href="/logo.png" type="image/png" sizes="192x192" />
+        <link rel="apple-touch-icon" href="/logo.png" />
+        <link rel="shortcut icon" href="/logo.png" type="image/png" />
+      </head>
       <body className="font-sans antialiased">
         {children}
         {process.env.NODE_ENV === 'production' && <Analytics />}
