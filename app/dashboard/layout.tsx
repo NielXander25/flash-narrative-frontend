@@ -4,6 +4,14 @@ import { useState } from 'react'
 import { Sidebar } from '@/components/dashboard/sidebar'
 import { Command, BarChart3, Settings, FileText, Compass, Menu, X } from 'lucide-react'
 
+const NAV_ICONS = {
+  Compass,
+  BarChart3,
+  FileText,
+  Command,
+  Settings,
+}
+
 export default function DashboardLayout({
   children,
 }: {
@@ -12,11 +20,11 @@ export default function DashboardLayout({
   const [sidebarOpen, setSidebarOpen] = useState(false)
 
   const navItems = [
-    { label: 'Command Center', icon: Compass, href: '/dashboard/command-center', active: false },
-    { label: 'Intelligence Dashboard', icon: BarChart3, href: '/dashboard', active: false },
-    { label: 'Reports', icon: FileText, href: '/dashboard/reports', active: false },
-    { label: 'API & Integrations', icon: Command, href: '/dashboard/api', active: false },
-    { label: 'Settings', icon: Settings, href: '/dashboard/settings', active: false },
+    { label: 'Command Center', icon: NAV_ICONS.Compass, href: '/dashboard/command-center' },
+    { label: 'Intelligence Dashboard', icon: NAV_ICONS.BarChart3, href: '/dashboard' },
+    { label: 'Reports', icon: NAV_ICONS.FileText, href: '/dashboard/reports' },
+    { label: 'API & Integrations', icon: NAV_ICONS.Command, href: '/dashboard/api' },
+    { label: 'Settings', icon: NAV_ICONS.Settings, href: '/dashboard/settings' },
   ]
 
   return (

@@ -2,52 +2,10 @@
 
 import { AlertCircle, TrendingUp, Eye, Clock } from 'lucide-react'
 import { useState } from 'react'
+import { BRANDS, RECENT_ALERTS } from '@/lib/constants'
 
 export default function CommandCenterPage() {
   const [selectedBrand, setSelectedBrand] = useState<string | null>(null)
-
-  const brands = [
-    {
-      id: 'zoom-bank',
-      name: 'Zoom Bank Asset',
-      client: 'Zoom',
-      mentions: 12,
-      trend: '+8%',
-      alerts: 3,
-      sentiment: 'positive',
-      thumbnail: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=300&h=200&fit=crop'
-    },
-    {
-      id: 'otbank',
-      name: 'OTBank',
-      client: 'OTBank',
-      mentions: 48,
-      trend: '+12%',
-      alerts: 2,
-      sentiment: 'positive',
-      thumbnail: 'https://images.unsplash.com/photo-1552664730-d307ca884978?w=300&h=200&fit=crop'
-    },
-    {
-      id: 'desgee',
-      name: 'Desgee Group',
-      client: 'Desgee',
-      mentions: 9,
-      trend: '-2%',
-      alerts: 1,
-      sentiment: 'neutral',
-      thumbnail: 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=300&h=200&fit=crop'
-    },
-    {
-      id: 'wtm',
-      name: 'WTM Nigeria',
-      client: 'WTM',
-      mentions: 15,
-      trend: '+5%',
-      alerts: 4,
-      sentiment: 'warning',
-      thumbnail: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=300&h=200&fit=crop'
-    }
-  ]
 
   const recentAlerts = [
     {
@@ -176,7 +134,7 @@ export default function CommandCenterPage() {
             </div>
 
             <div className="space-y-4">
-              {recentAlerts.map((alert, idx) => (
+              {RECENT_ALERTS.map((alert, idx) => (
                 <div key={idx} className="bg-[#1E1E2E] rounded-lg p-3 sm:p-4 border-l-2 border-l-[#D4A017] hover:bg-[#252535] transition-colors cursor-pointer">
                   <div className="flex items-start justify-between mb-2">
                     <p className="text-[#D4A017] text-xs sm:text-sm font-semibold">{alert.brand}</p>

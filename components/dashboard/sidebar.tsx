@@ -4,13 +4,11 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 import { LucideIcon } from 'lucide-react'
-import { useState } from 'react'
 
 interface NavItem {
   label: string
   icon: LucideIcon
   href: string
-  active: boolean
 }
 
 interface SidebarProps {
@@ -19,7 +17,6 @@ interface SidebarProps {
 }
 
 export function Sidebar({ items, onNavigate }: SidebarProps) {
-  const [workspaceMenu, setWorkspaceMenu] = useState(false)
   const pathname = usePathname()
 
   return (

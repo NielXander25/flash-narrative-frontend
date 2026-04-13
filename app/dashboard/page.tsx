@@ -8,71 +8,35 @@ import { MentionsTable } from '@/components/dashboard/mentions-table'
 import { Button } from '@/components/ui/button'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { FileText, Download } from 'lucide-react'
-
-// Mock data - will be replaced with API calls
-const mockMentions = [
-  {
-    id: 'https://nairametrics.com/example',
-    title: 'Zenith Bank launches new premium service',
-    snippet: 'The new service aims to provide better customer experience and financial inclusion...',
-    platform_category: 'News',
-    sentiment_label: 'Positive',
-    published_date: '2026-03-02T10:00:00Z',
-    source: 'Nairae Metrics',
-  },
-  {
-    id: 'https://nairaland.com/forum/123',
-    title: 'Wahala for this new app',
-    snippet: 'This new app feature is pure wahala oo. Why is everything so complicated?',
-    platform_category: 'Social',
-    sentiment_label: 'Anger',
-    published_date: '2026-03-02T11:30:00Z',
-    source: 'Nairaland',
-  },
-  {
-    id: 'https://businessday.ng/tech',
-    title: 'Nigeria fintech sector records growth',
-    snippet: 'Industry experts predict continued growth in digital payment solutions...',
-    platform_category: 'News',
-    sentiment_label: 'Positive',
-    published_date: '2026-03-01T14:20:00Z',
-    source: 'Business Day',
-  },
-  {
-    id: 'https://twitter.com/example',
-    title: 'Just switched to new banking app',
-    snippet: 'Really impressed with the new features. Much better than expected!',
-    platform_category: 'Social',
-    sentiment_label: 'Positive',
-    published_date: '2026-03-01T09:15:00Z',
-    source: 'Twitter',
-  },
-]
-
-const sentimentData = [
-  { name: 'Positive', value: 45, color: '#2ECC8A' },
-  { name: 'Neutral', value: 30, color: '#5B8FD4' },
-  { name: 'Negative', value: 18, color: '#E8832A' },
-  { name: 'Anger', value: 7, color: '#E84242' },
-]
-
-const sovData = [
-  { name: 'Flash Narrative', value: 60 },
-  { name: 'Competitor A', value: 25 },
-  { name: 'Competitor B', value: 15 },
-]
+import { MOCK_MENTIONS, SENTIMENT_DATA, SOV_DATA } from '@/lib/constants'
+import { exportToPDF, exportToExcel, downloadBlob } from '@/lib/api'
 
 export default function DashboardPage() {
   const [activeTab, setActiveTab] = useState<'news' | 'social'>('news')
+  const [isExporting, setIsExporting] = useState(false)
 
-  const handleExportPDF = () => {
-    console.log('Exporting PDF...')
-    // In production: POST /api/v1/export/pdf
+  const handleExportPDF = async () => {
+    setIsExporting(true)
+    try {
+      const blob = await exportToPDF({ mentions: MOCK_MENTIONS, sentiment: SENTIMENT_DATA })
+      downloadBlob(blob, 'intelligence-report.pdf')
+    } catch (error) {
+      console.error('Failed to export PDF:', error)
+    } finally {
+      setIsExporting(false)
+    }
   }
 
-  const handleExportExcel = () => {
-    console.log('Exporting Excel...')
-    // In production: POST /api/v1/export/excel
+  const handleExportExcel = async () => {
+    setIsExporting(true)
+    try {
+      const blob = await exportToExcel({ mentions: MOCK_MENTIONS, sentiment: SENTIMENT_DATA })
+      downloadBlob(blob, 'intelligence-report.xlsx')
+    } catch (error) {
+      console.error('Failed to export Excel:', error)
+    } finally {
+      setIsExporting(false)
+    }
   }
 
   return (
@@ -117,15 +81,17 @@ export default function DashboardPage() {
           <div className="flex items-end gap-3">
             <Button
               onClick={handleExportPDF}
-              className="bg-[#D4A017] hover:bg-[#E6B420] text-[#0A0A0F] font-semibold h-10 flex items-center gap-2"
+              disabled={isExporting}
+              className="bg-[#D4A017] hover:bg-[#E6B420] text-[#0A0A0F] font-semibold h-10 flex items-center gap-2 disabled:opacity-50"
             >
               <FileText className="w-4 h-4" />
               PDF
             </Button>
             <Button
               onClick={handleExportExcel}
+              disabled={isExporting}
               variant="outline"
-              className="border-[#1E1E2E] text-[#D4A017] hover:bg-[#1E1E2E] h-10 flex items-center gap-2"
+              className="border-[#1E1E2E] text-[#D4A017] hover:bg-[#1E1E2E] h-10 flex items-center gap-2 disabled:opacity-50"
             >
               <Download className="w-4 h-4" />
               Excel
@@ -164,13 +130,11 @@ export default function DashboardPage() {
             />
           </div>
 
-          {/* Charts Row */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            <SentimentChart data={sentimentData} />
-            <SOVChart data={sovData} />
+            <SentimentChart data={SENTIMENT_DATA} />
+            <SOVChart data={SOV_DATA} />
           </div>
 
-          {/* Data Zone - Tabs & Table */}
           <div>
             <Tabs value={activeTab} onValueChange={(v) => setActiveTab(v as 'news' | 'social')}>
               <TabsList className="bg-[#12121A] border border-[#1E1E2E] p-1 h-auto rounded-lg">
@@ -189,11 +153,11 @@ export default function DashboardPage() {
               </TabsList>
 
               <TabsContent value="news" className="mt-6">
-                <MentionsTable data={mockMentions} activeTab="news" />
+                <MentionsTable data={MOCK_MENTIONS} activeTab="news" />
               </TabsContent>
 
               <TabsContent value="social" className="mt-6">
-                <MentionsTable data={mockMentions} activeTab="social" />
+                <MentionsTable data={MOCK_MENTIONS} activeTab="social" />
               </TabsContent>
             </Tabs>
           </div>
