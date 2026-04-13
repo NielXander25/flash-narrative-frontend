@@ -49,7 +49,7 @@ function LogoSection() {
           priority
         />
       </div>
-      <span className="text-[#F8FAFC] font-bold text-lg">FLASH</span>
+      <span className="text-[#F8FAFC] font-bold text-lg">FLASH NARRATIVE</span>
     </div>
   )
 }
@@ -71,7 +71,7 @@ function NavigationMenu({ items, pathname, onNavigate }: NavigationMenuProps) {
         <NavigationLink
           key={item.href}
           item={item}
-          isActive={pathname === item.href || pathname.startsWith(item.href + '/')}
+          isActive={pathname === item.href}
           onNavigate={onNavigate}
         />
       ))}
