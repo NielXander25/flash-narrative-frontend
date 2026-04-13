@@ -1,11 +1,10 @@
-import type { Metadata } from "next";
-
 export const metadata: Metadata = {
-  title: "Flash Narrative",
-  description: "PR Intelligence Platform",
+  title: "Flash Narrative — Enterprise PR Intelligence",
+  description: "Real-time PR Intelligence Platform",
   icons: {
     icon: "/logo.png",
-    shortcut: "/logo.png",
     apple: "/logo.png",
+    shortcut: "/logo.png",
   },
 };
+
