@@ -7,26 +7,15 @@ const _geist = Geist({ subsets: ["latin"] });
 const _geistMono = Geist_Mono({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: 'Flash Narrative - Enterprise PR Intelligence',
-  description: 'Enterprise PR Intelligence Platform for Media Monitoring and Analysis',
-  generator: 'Flash Narrative',
+  title: 'Flash Narrative — Enterprise PR Intelligence',
+  description: 'Real-time PR Intelligence Platform for Media Monitoring, Reputation Management, and Crisis Detection',
   themeColor: '#D4A017',
   icons: {
     icon: [
-      {
-        url: '/icon-light-32x32.png',
-        media: '(prefers-color-scheme: light)',
-      },
-      {
-        url: '/icon-dark-32x32.png',
-        media: '(prefers-color-scheme: dark)',
-      },
-      {
-        url: '/icon.svg',
-        type: 'image/svg+xml',
-      },
+      { url: '/favicon.ico', type: 'image/x-icon' },
+      { url: '/favicon.png', type: 'image/png', sizes: '192x192' },
     ],
-    apple: '/apple-icon.png',
+    apple: '/apple-touch-icon.png',
   },
 }
 

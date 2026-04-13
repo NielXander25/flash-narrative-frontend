@@ -2,29 +2,59 @@
 
 import { useState } from 'react'
 import { Sidebar } from '@/components/dashboard/sidebar'
-import { Command, BarChart3, Settings, FileText, Compass } from 'lucide-react'
+import { Command, BarChart3, Settings, FileText, Compass, Menu, X } from 'lucide-react'
+
+const NAV_ICONS = {
+  Compass,
+  BarChart3,
+  FileText,
+  Command,
+  Settings,
+}
 
 export default function DashboardLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
-  const [collapsed, setCollapsed] = useState(false)
+  const [sidebarOpen, setSidebarOpen] = useState(false)
 
   const navItems = [
-    { label: 'Command Center', icon: Compass, href: '/dashboard/command-center', active: false },
-    { label: 'Intelligence Dashboard', icon: BarChart3, href: '/dashboard', active: false },
-    { label: 'Reports', icon: FileText, href: '/dashboard/reports', active: false },
-    { label: 'API & Integrations', icon: Command, href: '/dashboard/api', active: false },
-    { label: 'Settings', icon: Settings, href: '/dashboard/settings', active: false },
+    { label: 'Command Center', icon: NAV_ICONS.Compass, href: '/dashboard/command-center' },
+    { label: 'Intelligence Dashboard', icon: NAV_ICONS.BarChart3, href: '/dashboard' },
+    { label: 'Reports', icon: NAV_ICONS.FileText, href: '/dashboard/reports' },
+    { label: 'API & Integrations', icon: NAV_ICONS.Command, href: '/dashboard/api' },
+    { label: 'Settings', icon: NAV_ICONS.Settings, href: '/dashboard/settings' },
   ]
 
   return (
     <div className="flex h-screen bg-[#0A0A0F]">
-      <Sidebar collapsed={collapsed} items={navItems} />
-      <main className="flex-1 overflow-auto">
-        {children}
-      </main>
+      <div className={`hidden lg:flex fixed lg:relative inset-y-0 left-0 w-64 bg-[#12121A] z-40 transform transition-transform duration-300 ${
+        sidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'
+      }`}>
+        <Sidebar items={navItems} onNavigate={() => setSidebarOpen(false)} />
+      </div>
+
+      {sidebarOpen && (
+        <div
+          className="fixed inset-0 bg-black/50 z-30 lg:hidden"
+          onClick={() => setSidebarOpen(false)}
+        />
+      )}
+
+      <div className="flex-1 flex flex-col overflow-hidden w-full">
+        <button
+          onClick={() => setSidebarOpen(!sidebarOpen)}
+          className="lg:hidden fixed top-4 left-4 z-50 p-2 bg-[#D4A017] text-[#0A0A0F] rounded-lg hover:bg-[#E6B420] transition-colors"
+          aria-label="Toggle menu"
+        >
+          {sidebarOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+        </button>
+
+        <main className="flex-1 overflow-auto pt-16 lg:pt-0">
+          {children}
+        </main>
+      </div>
     </div>
   )
 }

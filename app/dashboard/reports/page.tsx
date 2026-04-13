@@ -55,28 +55,26 @@ export default function ReportsPage() {
   ])
 
   return (
-    <div className="bg-[#0A0A0F] min-h-screen">
-      {/* Header */}
-      <div className="border-b border-[#1E1E2E] px-8 py-6">
-        <div className="flex items-center justify-between">
+    <div className="bg-[#0A0A0F] min-h-screen flex flex-col">
+      <div className="border-b border-[#1E1E2E] px-4 sm:px-6 lg:px-8 py-4 sm:py-6">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
           <div>
-            <h1 className="text-4xl font-bold text-[#F8FAFC]">Reports Command Center</h1>
-            <p className="text-[#94A3B8] mt-2">Build, support and send client presentations.</p>
+            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-[#F8FAFC]">Reports Command Center</h1>
+            <p className="text-[#94A3B8] mt-2 text-sm sm:text-base">Build, support and send client presentations.</p>
           </div>
           <button 
             onClick={() => setShowTemplateModal(true)}
-            className="flex items-center gap-2 px-6 py-3 bg-[#D4A017] hover:bg-[#E6B420] text-[#0A0A0F] rounded-lg font-semibold transition-colors"
+            className="w-full sm:w-auto flex items-center justify-center gap-2 px-4 sm:px-6 py-2 sm:py-3 bg-[#D4A017] hover:bg-[#E6B420] text-[#0A0A0F] rounded-lg font-semibold transition-colors text-sm"
           >
-            <Plus className="w-5 h-5" />
+            <Plus className="w-4 sm:w-5 h-4 sm:h-5" />
             + New Report
           </button>
         </div>
       </div>
 
-      <div className="p-8">
-        {/* Table Header */}
+      <div className="flex-1 p-4 sm:p-6 lg:p-8">
         <div className="mb-6">
-          <div className="grid grid-cols-7 gap-4 px-6 py-4 bg-[#1E1E2E] rounded-t-lg border border-[#1E1E2E] text-[#94A3B8] text-sm font-semibold uppercase">
+          <div className="hidden sm:grid grid-cols-7 gap-2 sm:gap-4 px-4 sm:px-6 py-4 bg-[#1E1E2E] rounded-t-lg border border-[#1E1E2E] text-[#94A3B8] text-xs sm:text-sm font-semibold uppercase">
             <div>Project</div>
             <div>Client</div>
             <div>KPI Score</div>
@@ -86,11 +84,10 @@ export default function ReportsPage() {
             <div>Actions</div>
           </div>
 
-          {/* Table Body */}
           {reports.length > 0 ? (
-            <div className="border border-t-0 border-[#1E1E2E] rounded-b-lg divide-y divide-[#1E1E2E]">
+            <div className="border border-t-0 border-[#1E1E2E] rounded-b-lg divide-y divide-[#1E1E2E] overflow-x-auto">
               {reports.map((report, idx) => (
-                <div key={report.id} className="grid grid-cols-7 gap-4 px-6 py-4 items-center bg-[#12121A] hover:bg-[#1E1E2E] transition-colors">
+                <div key={report.id} className="hidden sm:grid grid-cols-7 gap-2 sm:gap-4 px-4 sm:px-6 py-3 sm:py-4 items-center bg-[#12121A] hover:bg-[#1E1E2E] transition-colors text-sm">
                   {/* Project Name */}
                   <div>
                     <p className="text-[#F8FAFC] font-medium">{report.projectName}</p>
@@ -147,11 +144,11 @@ export default function ReportsPage() {
               ))}
             </div>
           ) : (
-            <div className="border border-t-0 border-[#1E1E2E] rounded-b-lg p-12 bg-[#12121A]">
+            <div className="border border-t-0 border-[#1E1E2E] rounded-b-lg p-6 sm:p-12 bg-[#12121A]">
               <div className="text-center">
-                <AlertCircle className="w-12 h-12 text-[#D4A017] mx-auto mb-4 opacity-50" />
-                <p className="text-[#F8FAFC] font-semibold mb-2">No reports generated yet</p>
-                <p className="text-[#94A3B8] text-sm mb-6">Start by selecting a command and clicking Build to generate your first professional report.</p>
+                <AlertCircle className="w-8 sm:w-12 h-8 sm:h-12 text-[#D4A017] mx-auto mb-4 opacity-50" />
+                <p className="text-[#F8FAFC] font-semibold mb-2 text-sm sm:text-base">No reports generated yet</p>
+                <p className="text-[#94A3B8] text-xs sm:text-sm mb-6">Start by selecting a command and clicking Build to generate your first professional report.</p>
                 <button 
                   onClick={() => setShowTemplateModal(true)}
                   className="inline-flex items-center gap-2 px-6 py-3 bg-[#D4A017] hover:bg-[#E6B420] text-[#0A0A0F] rounded-lg font-semibold transition-colors"

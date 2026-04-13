@@ -36,29 +36,24 @@ export default function SettingsPage() {
   }
 
   return (
-    <div className="flex flex-col h-full">
-      {/* Header */}
-      <div className="bg-[#12121A] border-b border-[#1E1E2E] px-8 py-6">
-        <h1 className="text-3xl font-bold text-[#F8FAFC] mb-2">Agency Branding</h1>
-        <p className="text-[#94A3B8]">Customize your dashboard with your brand identity</p>
+    <div className="flex flex-col h-full w-full">
+      <div className="bg-[#12121A] border-b border-[#1E1E2E] px-4 sm:px-6 lg:px-8 py-4 sm:py-6">
+        <h1 className="text-2xl sm:text-3xl font-bold text-[#F8FAFC] mb-2">Agency Branding</h1>
+        <p className="text-[#94A3B8] text-sm sm:text-base">Customize your dashboard with your brand identity</p>
       </div>
 
-      {/* Content */}
-      <div className="flex-1 overflow-auto p-8">
+      <div className="flex-1 overflow-auto p-4 sm:p-6 lg:p-8">
         <div className="max-w-4xl">
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            {/* Left: Settings Form */}
-            <div className="lg:col-span-2 space-y-8">
-              {/* Brand Assets Section */}
-              <div className="bg-[#12121A] border border-[#1E1E2E] rounded-lg p-8">
-                <h2 className="text-xl font-semibold text-[#F8FAFC] mb-6">Brand Assets</h2>
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8">
+            <div className="lg:col-span-2 space-y-6 sm:space-y-8">
+              <div className="bg-[#12121A] border border-[#1E1E2E] rounded-lg p-6 sm:p-8">
+                <h2 className="text-lg sm:text-xl font-semibold text-[#F8FAFC] mb-6">Brand Assets</h2>
 
-                {/* Logo Upload */}
-                <div className="mb-8">
-                  <label className="text-[#94A3B8] text-sm font-semibold uppercase block mb-4">
+                <div className="mb-6 sm:mb-8">
+                  <label className="text-[#94A3B8] text-xs sm:text-sm font-semibold uppercase block mb-4">
                     Upload Logo
                   </label>
-                  <div className="border-2 border-dashed border-[#1E1E2E] rounded-lg p-8 text-center hover:border-[#D4A017] transition-colors cursor-pointer group">
+                  <div className="border-2 border-dashed border-[#1E1E2E] rounded-lg p-6 sm:p-8 text-center hover:border-[#D4A017] transition-colors cursor-pointer group">
                     <input
                       type="file"
                       accept=".svg,.png"
@@ -149,28 +144,26 @@ export default function SettingsPage() {
                 </div>
               </div>
 
-              {/* Action Buttons */}
-              <div className="flex gap-4">
+              <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
                 <Button
                   onClick={handleSave}
-                  className="bg-[#D4A017] hover:bg-[#E6B420] text-[#0A0A0F] font-semibold px-8 h-10"
+                  className="w-full sm:w-auto bg-[#D4A017] hover:bg-[#E6B420] text-[#0A0A0F] font-semibold px-6 sm:px-8 h-10 text-sm"
                 >
                   Save Changes
                 </Button>
                 <Button
                   onClick={handleCancel}
                   variant="outline"
-                  className="border-[#1E1E2E] text-[#D4A017] hover:bg-[#1E1E2E] px-8 h-10"
+                  className="w-full sm:w-auto border-[#1E1E2E] text-[#D4A017] hover:bg-[#1E1E2E] px-6 sm:px-8 h-10 text-sm"
                 >
                   Cancel
                 </Button>
               </div>
             </div>
 
-            {/* Right: Live Preview */}
             <div className="lg:col-span-1">
-              <div className="sticky top-8 bg-[#12121A] border border-[#1E1E2E] rounded-lg p-6">
-                <h3 className="text-[#F8FAFC] font-semibold mb-6">Live Preview</h3>
+              <div className="lg:sticky lg:top-8 bg-[#12121A] border border-[#1E1E2E] rounded-lg p-4 sm:p-6">
+                <h3 className="text-[#F8FAFC] font-semibold mb-4 sm:mb-6 text-sm sm:text-base">Live Preview</h3>
 
                 {/* Preview Sidebar */}
                 <div className="bg-[#1E1E2E] rounded-lg p-4 mb-6">

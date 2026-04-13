@@ -76,24 +76,21 @@ export default function APIPage() {
   }
 
   return (
-    <div className="flex flex-col h-full">
-      {/* Header */}
-      <div className="bg-[#12121A] border-b border-[#1E1E2E] px-8 py-6 flex items-center justify-between">
+    <div className="flex flex-col h-full w-full">
+      <div className="bg-[#12121A] border-b border-[#1E1E2E] px-4 sm:px-6 lg:px-8 py-4 sm:py-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-bold text-[#F8FAFC] mb-2">API & Integration Hub</h1>
-          <p className="text-[#94A3B8]">Manage API keys for your enterprise integrations</p>
+          <h1 className="text-2xl sm:text-3xl font-bold text-[#F8FAFC] mb-2">API & Integration Hub</h1>
+          <p className="text-[#94A3B8] text-sm sm:text-base">Manage API keys for your enterprise integrations</p>
         </div>
-        <Button className="bg-[#D4A017] hover:bg-[#E6B420] text-[#0A0A0F] font-semibold flex items-center gap-2 h-10">
+        <Button className="w-full sm:w-auto bg-[#D4A017] hover:bg-[#E6B420] text-[#0A0A0F] font-semibold flex items-center justify-center gap-2 h-10 text-sm">
           <Plus className="w-4 h-4" />
           Generate New Key
         </Button>
       </div>
 
-      {/* Content */}
-      <div className="flex-1 overflow-auto p-8">
-        <div className="max-w-6xl space-y-6">
-          {/* Security Banner */}
-          <div className="bg-[#5B8FD4]/10 border border-[#5B8FD4]/30 rounded-lg p-4 flex items-start gap-4">
+      <div className="flex-1 overflow-auto p-4 sm:p-6 lg:p-8">
+        <div className="max-w-6xl space-y-4 sm:space-y-6">
+          <div className="bg-[#5B8FD4]/10 border border-[#5B8FD4]/30 rounded-lg p-3 sm:p-4 flex items-start gap-3 sm:gap-4">
             <AlertCircle className="w-5 h-5 text-[#5B8FD4] flex-shrink-0 mt-0.5" />
             <div>
               <p className="text-[#5B8FD4] font-semibold text-sm mb-1">Keep your API keys secure</p>
