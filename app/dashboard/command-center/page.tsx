@@ -72,24 +72,21 @@ export default function CommandCenterPage() {
 
   return (
     <div className="bg-[#0A0A0F] min-h-screen">
-      {/* Header */}
-      <div className="border-b border-[#1E1E2E] px-8 py-6">
-        <div className="flex items-center justify-between">
+      <div className="border-b border-[#1E1E2E] px-4 sm:px-6 lg:px-8 py-4 sm:py-6">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
           <div>
-            <h1 className="text-4xl font-bold text-[#F8FAFC]">GLOBAL COMMAND CENTER</h1>
-            <p className="text-[#94A3B8] mt-2">Real-time monitoring and instant response.</p>
+            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-[#F8FAFC]">GLOBAL COMMAND CENTER</h1>
+            <p className="text-[#94A3B8] mt-2 text-sm sm:text-base">Real-time monitoring and instant response.</p>
           </div>
-          <button className="px-6 py-3 bg-[#D4A017] hover:bg-[#E6B420] text-[#0A0A0F] rounded-lg font-semibold transition-colors">
+          <button className="w-full sm:w-auto px-4 sm:px-6 py-2 sm:py-3 bg-[#D4A017] hover:bg-[#E6B420] text-[#0A0A0F] rounded-lg font-semibold transition-colors text-sm sm:text-base">
             + Add Organization
           </button>
         </div>
       </div>
 
-      <div className="p-8 flex gap-8">
-        {/* Main Portfolio Grid */}
+      <div className="p-4 sm:p-6 lg:p-8 flex flex-col lg:flex-row gap-6 lg:gap-8">
         <div className="flex-1">
-          {/* Summary KPIs */}
-          <div className="grid grid-cols-3 gap-4 mb-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 mb-8">
             <div className="bg-[#12121A] rounded-lg p-4 border border-[#1E1E2E]">
               <div className="flex items-center justify-between">
                 <div>
@@ -119,10 +116,9 @@ export default function CommandCenterPage() {
             </div>
           </div>
 
-          {/* Brand Portfolio Grid */}
           <div className="mb-8">
-            <h2 className="text-xl font-bold text-[#F8FAFC] mb-4">AGENCY PORTFOLIO</h2>
-            <div className="grid grid-cols-2 gap-6">
+            <h2 className="text-lg sm:text-xl font-bold text-[#F8FAFC] mb-4">AGENCY PORTFOLIO</h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-4 sm:gap-6">
               {brands.map((brand) => (
                 <div 
                   key={brand.id}
@@ -172,24 +168,23 @@ export default function CommandCenterPage() {
           </div>
         </div>
 
-        {/* Right Sidebar - Recent Alerts */}
-        <div className="w-80">
-          <div className="bg-[#12121A] rounded-lg border border-[#1E1E2E] p-6 sticky top-8">
+        <div className="lg:w-80">
+          <div className="bg-[#12121A] rounded-lg border border-[#1E1E2E] p-4 sm:p-6 lg:sticky lg:top-8">
             <div className="flex items-center gap-2 mb-6">
               <AlertCircle className="w-5 h-5 text-[#D4A017]" />
-              <h3 className="text-lg font-bold text-[#F8FAFC]">RECENT ALERTS</h3>
+              <h3 className="text-base sm:text-lg font-bold text-[#F8FAFC]">RECENT ALERTS</h3>
             </div>
 
             <div className="space-y-4">
               {recentAlerts.map((alert, idx) => (
-                <div key={idx} className="bg-[#1E1E2E] rounded-lg p-4 border-l-2 border-l-[#D4A017] hover:bg-[#252535] transition-colors cursor-pointer">
+                <div key={idx} className="bg-[#1E1E2E] rounded-lg p-3 sm:p-4 border-l-2 border-l-[#D4A017] hover:bg-[#252535] transition-colors cursor-pointer">
                   <div className="flex items-start justify-between mb-2">
-                    <p className="text-[#D4A017] text-sm font-semibold">{alert.brand}</p>
+                    <p className="text-[#D4A017] text-xs sm:text-sm font-semibold">{alert.brand}</p>
                     <div className={`w-2 h-2 rounded-full ${
                       alert.severity === 'high' ? 'bg-[#E84242]' : 'bg-[#E8832A]'
                     }`} />
                   </div>
-                  <p className="text-[#F8FAFC] text-sm font-medium mb-2">{alert.title}</p>
+                  <p className="text-[#F8FAFC] text-xs sm:text-sm font-medium mb-2">{alert.title}</p>
                   <div className="flex items-center gap-1 text-[#94A3B8] text-xs">
                     <Clock className="w-3 h-3" />
                     {alert.time}
@@ -198,7 +193,7 @@ export default function CommandCenterPage() {
               ))}
             </div>
 
-            <button className="w-full mt-6 px-4 py-3 bg-[#D4A017] hover:bg-[#E6B420] text-[#0A0A0F] rounded-lg font-semibold transition-colors text-sm">
+            <button className="w-full mt-6 px-4 py-2 sm:py-3 bg-[#D4A017] hover:bg-[#E6B420] text-[#0A0A0F] rounded-lg font-semibold transition-colors text-xs sm:text-sm">
               View All Alerts
             </button>
           </div>

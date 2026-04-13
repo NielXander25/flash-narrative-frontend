@@ -27,35 +27,33 @@ export default function LoginPage() {
         </div>
 
         <div className="relative z-10">
-          {/* Logo */}
           <div className="flex items-center gap-3 mb-16">
-            <div className="w-9 h-9 rounded-full overflow-hidden flex-shrink-0 flex items-center justify-center bg-gradient-to-br from-[#D4A017] to-[#B8860B]">
+            <div className="w-10 h-10 rounded-full overflow-hidden flex-shrink-0 flex items-center justify-center bg-gradient-to-br from-[#D4A017] to-[#B8860B]">
               <Image 
                 src="/logo.png" 
                 alt="Flash Narrative" 
-                width={36} 
-                height={36}
-                className="w-8 h-8 object-cover"
+                width={40} 
+                height={40}
+                className="w-10 h-10 object-contain"
+                priority
               />
             </div>
             <span className="text-[#F8FAFC] font-bold text-lg">Flash Narrative</span>
           </div>
 
-          {/* Headline */}
-          <h1 className="text-5xl font-bold text-[#F8FAFC] mb-12 leading-tight">
+          <h1 className="text-4xl sm:text-5xl font-bold text-[#F8FAFC] mb-8 sm:mb-12 leading-tight">
             Enterprise PR Intelligence
           </h1>
 
-          {/* Value Props */}
-          <div className="space-y-6">
+          <div className="space-y-4 sm:space-y-6">
             {[
               'Real-time media monitoring across 500+ sources',
               'AI-powered sentiment analysis & crisis detection',
               'Multi-brand white-label dashboard'
             ].map((prop, idx) => (
-              <div key={idx} className="flex items-start gap-4">
-                <Check className="w-6 h-6 text-[#D4A017] flex-shrink-0 mt-1" />
-                <p className="text-[#94A3B8] text-lg">{prop}</p>
+              <div key={idx} className="flex items-start gap-3 sm:gap-4">
+                <Check className="w-5 sm:w-6 h-5 sm:h-6 text-[#D4A017] flex-shrink-0 mt-1" />
+                <p className="text-[#94A3B8] text-base sm:text-lg">{prop}</p>
               </div>
             ))}
           </div>
@@ -67,36 +65,33 @@ export default function LoginPage() {
         </div>
       </div>
 
-      {/* Right Panel - Login Form */}
-      <div className="w-full lg:w-1/2 flex items-center justify-center p-6 bg-[#0A0A0F]">
+      <div className="w-full lg:w-1/2 flex items-center justify-center p-4 sm:p-6 bg-[#0A0A0F]">
         <div className="w-full max-w-md">
-          {/* Mobile Logo */}
-          <div className="lg:hidden mb-8">
+          <div className="lg:hidden mb-6 sm:mb-8">
             <div className="flex items-center gap-3 mb-8">
-              <div className="w-9 h-9 rounded-full overflow-hidden flex-shrink-0 flex items-center justify-center bg-gradient-to-br from-[#D4A017] to-[#B8860B]">
+              <div className="w-10 h-10 rounded-full overflow-hidden flex-shrink-0 flex items-center justify-center bg-gradient-to-br from-[#D4A017] to-[#B8860B]">
                 <Image 
                   src="/logo.png" 
                   alt="Flash Narrative" 
-                  width={36} 
-                  height={36}
-                  className="w-8 h-8 object-cover"
+                  width={40} 
+                  height={40}
+                  className="w-10 h-10 object-contain"
+                  priority
                 />
               </div>
               <span className="text-[#F8FAFC] font-bold text-lg">Flash Narrative</span>
             </div>
           </div>
 
-          {/* Card Content */}
-          <div className="bg-[#12121A] rounded-lg p-8 border border-[#1E1E2E]">
-            <h2 className="text-2xl font-bold text-[#F8FAFC] mb-2">Welcome Back</h2>
-            <p className="text-[#94A3B8] mb-8 text-sm">Sign in to your enterprise dashboard</p>
+          <div className="bg-[#12121A] rounded-lg p-6 sm:p-8 border border-[#1E1E2E]">
+            <h2 className="text-xl sm:text-2xl font-bold text-[#F8FAFC] mb-2">Welcome Back</h2>
+            <p className="text-[#94A3B8] mb-6 sm:mb-8 text-sm">Sign in to your enterprise dashboard</p>
 
-            {/* Google SSO Button */}
             <Button
               onClick={handleGoogleSSO}
-              className="w-full bg-[#D4A017] hover:bg-[#E6B420] text-[#0A0A0F] font-semibold h-11 rounded-lg flex items-center justify-center gap-3 transition-colors"
+              className="w-full bg-[#D4A017] hover:bg-[#E6B420] text-[#0A0A0F] font-semibold h-10 sm:h-11 rounded-lg flex items-center justify-center gap-3 transition-colors text-sm sm:text-base"
             >
-              <Mail className="w-5 h-5" />
+              <Mail className="w-4 sm:w-5 h-4 sm:h-5" />
               Continue with Google
             </Button>
 
@@ -110,14 +105,12 @@ export default function LoginPage() {
               </div>
             </div>
 
-            {/* Additional option */}
-            <p className="text-center text-[#94A3B8] text-sm">
+            <p className="text-center text-[#94A3B8] text-xs sm:text-sm">
               SSO provisioned by your administrator
             </p>
           </div>
 
-          {/* Footer */}
-          <div className="mt-8 text-center text-[#94A3B8] text-xs">
+          <div className="mt-6 sm:mt-8 text-center text-[#94A3B8] text-xs">
             <p>By signing in, you agree to our{' '}
               <a href="#" className="text-[#D4A017] hover:text-[#E6B420] underline">
                 Terms of Service

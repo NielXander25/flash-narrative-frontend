@@ -14,25 +14,25 @@ interface NavItem {
 }
 
 interface SidebarProps {
-  collapsed: boolean
   items: NavItem[]
+  onNavigate?: () => void
 }
 
-export function Sidebar({ collapsed, items }: SidebarProps) {
+export function Sidebar({ items, onNavigate }: SidebarProps) {
   const [workspaceMenu, setWorkspaceMenu] = useState(false)
   const pathname = usePathname()
 
   return (
     <div className="w-64 bg-[#12121A] border-r border-[#1E1E2E] flex flex-col p-6 h-screen overflow-y-auto">
-      {/* Logo */}
       <div className="flex items-center gap-3 mb-8">
-        <div className="w-9 h-9 rounded-full overflow-hidden flex-shrink-0 flex items-center justify-center bg-gradient-to-br from-[#D4A017] to-[#B8860B]">
+        <div className="w-10 h-10 rounded-full overflow-hidden flex-shrink-0 flex items-center justify-center bg-gradient-to-br from-[#D4A017] to-[#B8860B]">
           <Image 
             src="/logo.png" 
             alt="Flash Narrative" 
-            width={36} 
-            height={36}
-            className="w-8 h-8 object-cover"
+            width={40} 
+            height={40}
+            className="w-10 h-10 object-contain"
+            priority
           />
         </div>
         <span className="text-[#F8FAFC] font-bold text-lg">FLASH</span>
@@ -47,6 +47,7 @@ export function Sidebar({ collapsed, items }: SidebarProps) {
             <Link
               key={item.href}
               href={item.href}
+              onClick={onNavigate}
               className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${
                 isActive
                   ? 'bg-[#D4A017] text-[#0A0A0F] font-semibold'
