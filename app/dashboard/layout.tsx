@@ -29,29 +29,29 @@ export default function DashboardLayout({
 
   return (
     <div className="flex h-screen bg-[#0A0A0F]">
-      <div className={`fixed inset-y-0 left-0 w-64 bg-[#12121A] z-40 transform transition-transform duration-300 lg:relative lg:translate-x-0 ${
-        sidebarOpen ? 'translate-x-0' : '-translate-x-full'
+      <div className={`hidden lg:flex fixed lg:relative inset-y-0 left-0 w-64 bg-[#12121A] z-40 transform transition-transform duration-300 ${
+        sidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'
       }`}>
         <Sidebar items={navItems} onNavigate={() => setSidebarOpen(false)} />
       </div>
 
-      <div className="flex-1 flex flex-col overflow-hidden">
+      {sidebarOpen && (
+        <div
+          className="fixed inset-0 bg-black/50 z-30 lg:hidden"
+          onClick={() => setSidebarOpen(false)}
+        />
+      )}
+
+      <div className="flex-1 flex flex-col overflow-hidden w-full">
         <button
           onClick={() => setSidebarOpen(!sidebarOpen)}
-          className="lg:hidden fixed top-4 left-4 z-50 p-2 bg-[#D4A017] text-[#0A0A0F] rounded-lg"
+          className="lg:hidden fixed top-4 left-4 z-50 p-2 bg-[#D4A017] text-[#0A0A0F] rounded-lg hover:bg-[#E6B420] transition-colors"
           aria-label="Toggle menu"
         >
           {sidebarOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
         </button>
 
-        {sidebarOpen && (
-          <div
-            className="fixed inset-0 bg-black/50 z-30 lg:hidden"
-            onClick={() => setSidebarOpen(false)}
-          />
-        )}
-
-        <main className="flex-1 overflow-auto">
+        <main className="flex-1 overflow-auto pt-16 lg:pt-0">
           {children}
         </main>
       </div>

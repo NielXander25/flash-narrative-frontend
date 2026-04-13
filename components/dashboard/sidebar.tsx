@@ -58,12 +58,8 @@ export function Sidebar({ items, onNavigate }: SidebarProps) {
         })}
       </nav>
 
-      {/* Workspace Switcher */}
       <div className="border-t border-[#1E1E2E] pt-6">
-        <button
-          onClick={() => setWorkspaceMenu(!workspaceMenu)}
-          className="w-full flex items-center gap-3 px-4 py-3 rounded-lg bg-[#1E1E2E] hover:bg-[#1E1E2E] text-[#94A3B8] hover:text-[#F8FAFC] transition-colors text-sm font-medium"
-        >
+        <button className="w-full flex items-center gap-3 px-4 py-3 rounded-lg bg-[#1E1E2E] hover:bg-[#252535] text-[#94A3B8] hover:text-[#F8FAFC] transition-colors text-sm font-medium">
           <div className="w-8 h-8 rounded-full bg-[#D4A017] flex items-center justify-center flex-shrink-0">
             <span className="text-[#0A0A0F] text-xs font-bold">Z</span>
           </div>
