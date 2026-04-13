@@ -2,30 +2,28 @@
 
 import { useState, useCallback } from 'react'
 import { Sidebar } from '@/components/dashboard/sidebar'
-import { Command, BarChart3, Settings, FileText, Compass, Menu, X } from 'lucide-react'
+import { Command, BarChart3, Settings, FileText, Compass, Menu, X, LucideIcon } from 'lucide-react'
 
-const NAV_ITEMS = [
-  { label: 'Command Center', icon: 'Compass' as const, href: '/dashboard/command-center' },
-  { label: 'Intelligence Dashboard', icon: 'BarChart3' as const, href: '/dashboard' },
-  { label: 'Reports', icon: 'FileText' as const, href: '/dashboard/reports' },
-  { label: 'API & Integrations', icon: 'Command' as const, href: '/dashboard/api' },
-  { label: 'Settings', icon: 'Settings' as const, href: '/dashboard/settings' },
-]
-
-const ICON_MAP = {
-  Compass,
-  BarChart3,
-  FileText,
-  Command,
-  Settings,
+interface NavItem {
+  label: string
+  icon: LucideIcon
+  href: string
 }
+
+const navItems: NavItem[] = [
+  { label: 'Command Center', icon: Compass, href: '/dashboard/command-center' },
+  { label: 'Intelligence Dashboard', icon: BarChart3, href: '/dashboard' },
+  { label: 'Reports', icon: FileText, href: '/dashboard/reports' },
+  { label: 'API & Integrations', icon: Command, href: '/dashboard/api' },
+  { label: 'Settings', icon: Settings, href: '/dashboard/settings' },
+]
 
 export default function DashboardLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
-  const [sidebarOpen, setSidebarOpen] = useState(false)
+  const [sidebarOpen, setSidebarOpen] = useState<boolean>(false)
 
   const handleToggleSidebar = useCallback(() => {
     setSidebarOpen(prev => !prev)
@@ -34,12 +32,6 @@ export default function DashboardLayout({
   const handleCloseSidebar = useCallback(() => {
     setSidebarOpen(false)
   }, [])
-
-  // Convert icon strings to actual components for the Sidebar
-  const navItems = NAV_ITEMS.map(item => ({
-    ...item,
-    icon: ICON_MAP[item.icon],
-  }))
 
   return (
     <div className="flex h-screen bg-[#0A0A0F]">
