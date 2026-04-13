@@ -77,21 +77,21 @@ export function MentionsTable({ data, activeTab }: MentionsTableProps) {
             <TableRow className="hover:bg-[#1E1E2E]">
               {activeTab === 'news' ? (
                 <>
-                  <TableHead className="text-[#94A3B8] font-semibold">Source</TableHead>
-                  <TableHead className="text-[#94A3B8] font-semibold">Article Title</TableHead>
-                  <TableHead className="text-[#94A3B8] font-semibold">Snippet</TableHead>
-                  <TableHead className="text-[#94A3B8] font-semibold">Sentiment</TableHead>
-                  <TableHead className="text-[#94A3B8] font-semibold">Date</TableHead>
-                  <TableHead className="text-[#94A3B8] font-semibold">Action</TableHead>
+                  <TableHead className="text-[#94A3B8] font-semibold w-24">Source</TableHead>
+                  <TableHead className="text-[#94A3B8] font-semibold w-32">Article Title</TableHead>
+                  <TableHead className="text-[#94A3B8] font-semibold w-48">Snippet</TableHead>
+                  <TableHead className="text-[#94A3B8] font-semibold w-28">Sentiment</TableHead>
+                  <TableHead className="text-[#94A3B8] font-semibold w-24">Date</TableHead>
+                  <TableHead className="text-[#94A3B8] font-semibold w-16">Action</TableHead>
                 </>
               ) : (
                 <>
-                  <TableHead className="text-[#94A3B8] font-semibold">Platform</TableHead>
-                  <TableHead className="text-[#94A3B8] font-semibold">Username</TableHead>
-                  <TableHead className="text-[#94A3B8] font-semibold">Post Content</TableHead>
-                  <TableHead className="text-[#94A3B8] font-semibold">Sentiment</TableHead>
-                  <TableHead className="text-[#94A3B8] font-semibold">Date</TableHead>
-                  <TableHead className="text-[#94A3B8] font-semibold">Action</TableHead>
+                  <TableHead className="text-[#94A3B8] font-semibold w-24">Platform</TableHead>
+                  <TableHead className="text-[#94A3B8] font-semibold w-32">Username</TableHead>
+                  <TableHead className="text-[#94A3B8] font-semibold w-48">Post Content</TableHead>
+                  <TableHead className="text-[#94A3B8] font-semibold w-28">Sentiment</TableHead>
+                  <TableHead className="text-[#94A3B8] font-semibold w-24">Date</TableHead>
+                  <TableHead className="text-[#94A3B8] font-semibold w-16">Action</TableHead>
                 </>
               )}
             </TableRow>
@@ -101,20 +101,26 @@ export function MentionsTable({ data, activeTab }: MentionsTableProps) {
               const sentimentColor = getSentimentColor(mention.sentiment_label)
               return (
                 <TableRow key={mention.id} className="border-b border-[#1E1E2E] hover:bg-[#1E1E2E]/50">
-                  <TableCell className="text-[#94A3B8] text-sm">{mention.source || mention.platform_category}</TableCell>
-                  <TableCell className="text-[#F8FAFC] text-sm font-medium max-w-xs truncate">
+                  <TableCell className="text-[#94A3B8] text-sm truncate w-24">{mention.source || mention.platform_category}</TableCell>
+                  <TableCell className="text-[#F8FAFC] text-sm font-medium truncate w-32">
                     {mention.title}
                   </TableCell>
-                  <TableCell className="text-[#94A3B8] text-sm max-w-xs">
-                    <span className="truncate">{mention.snippet}</span>
+                  {/* FIX: Snippet column with proper truncation and max-width */}
+                  <TableCell className="text-[#94A3B8] text-sm w-48">
+                    <div className="line-clamp-2 break-words">
+                      {mention.snippet}
+                    </div>
                   </TableCell>
-                  <TableCell>
-                    <Badge className={`${sentimentColor.bg} ${sentimentColor.text} border-0`}>
-                      {mention.sentiment_label}
-                    </Badge>
+                  {/* FIX: Sentiment badge with proper spacing and alignment */}
+                  <TableCell className="w-28">
+                    <div className="flex items-center">
+                      <Badge className={`${sentimentColor.bg} ${sentimentColor.text} border-0 whitespace-nowrap`}>
+                        {mention.sentiment_label}
+                      </Badge>
+                    </div>
                   </TableCell>
-                  <TableCell className="text-[#94A3B8] text-sm">{formatDate(mention.published_date)}</TableCell>
-                  <TableCell>
+                  <TableCell className="text-[#94A3B8] text-sm whitespace-nowrap w-24">{formatDate(mention.published_date)}</TableCell>
+                  <TableCell className="w-16">
                     <a
                       href={mention.id}
                       target="_blank"
@@ -132,7 +138,7 @@ export function MentionsTable({ data, activeTab }: MentionsTableProps) {
       </div>
 
       {/* Pagination Footer */}
-      <div className="bg-[#1E1E2E] border-t border-[#1E1E2E] px-6 py-4 flex items-center justify-between">
+      <div className="bg-[#1E1E2E] border-t border-[#1E1E2E] px-6 py-4 flex items-center justify-between flex-wrap gap-4">
         <div className="flex items-center gap-4">
           <span className="text-[#94A3B8] text-sm">Rows per page:</span>
           <Select value={rowsPerPage} onValueChange={setRowsPerPage}>
