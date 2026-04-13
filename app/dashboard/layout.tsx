@@ -45,13 +45,13 @@ export default function DashboardLayout({
         <>
           {/* Overlay backdrop */}
           <div
-            className="fixed inset-0 bg-black/60 z-30 lg:hidden"
+            className="fixed inset-0 bg-black/60 z-40 lg:hidden"
             onClick={handleCloseSidebar}
             role="presentation"
             aria-hidden="true"
           />
           {/* Mobile sidebar panel */}
-          <div className="fixed inset-y-0 left-0 w-64 bg-[#12121A] border-r border-[#1E1E2E] z-40 lg:hidden">
+          <div className="fixed inset-y-0 left-0 w-64 bg-[#12121A] border-r border-[#1E1E2E] z-50 lg:hidden">
             <Sidebar items={navItems} onNavigate={handleCloseSidebar} />
           </div>
         </>
@@ -74,7 +74,7 @@ export default function DashboardLayout({
               <Menu className="w-6 h-6 text-[#D4A017]" />
             )}
           </button>
-          <span className="text-[#F8FAFC] font-semibold">FLASH</span>
+          <span className="text-[#F8FAFC] font-semibold">FLASH NARRATIVE</span>
           <div className="w-10" /> {/* Spacer for centering */}
         </div>
 
