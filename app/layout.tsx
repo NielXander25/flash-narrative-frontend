@@ -11,7 +11,10 @@ export const metadata: Metadata = {
   description: 'Real-time PR Intelligence Platform for Media Monitoring, Reputation Management, and Crisis Detection',
   themeColor: '#D4A017',
   icons: {
-    icon: '/favicon.ico',
+    icon: [
+      { url: '/favicon.ico', type: 'image/x-icon' },
+      { url: '/favicon.png', type: 'image/png', sizes: '192x192' },
+    ],
     apple: '/apple-touch-icon.png',
   },
 }
