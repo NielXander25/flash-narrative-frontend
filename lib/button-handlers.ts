@@ -12,10 +12,7 @@ export const showNotification = (message: string, type: 'success' | 'error' | 'i
 // ============================================
 
 export function handleExportCommandCenter() {
-  const content = generatePlaceholderReport(
-    'Global Command Center',
-    'This would include: Active campaigns, Total mentions, Critical alerts, Agency portfolio'
-  )
+  const content = generatePlaceholderReport('Global Command Center')
   downloadPlaceholderFile('command-center-export', content, 'txt')
   showNotification('Command Center data exported successfully', 'success')
 }
@@ -42,10 +39,7 @@ export function handleBrandSelect(brandId: string, brandName: string) {
 // ============================================
 
 export function handleExportReport() {
-  const content = generatePlaceholderReport(
-    'Reports Command Center',
-    'This export would include all generated reports and analytics'
-  )
+  const content = generatePlaceholderReport('Reports Command Center')
   downloadPlaceholderFile('reports-export', content, 'txt')
   showNotification('Reports exported successfully', 'success')
 }
@@ -62,10 +56,7 @@ export function handleGenerateReport(campaignName: string, template: string) {
 }
 
 export function handleDownloadReport(reportId: string, reportName: string) {
-  const content = generatePlaceholderReport(
-    `Report: ${reportName}`,
-    'This is a placeholder. Real report will be available after backend integration.'
-  )
+  const content = generatePlaceholderReport(`Report: ${reportName}`)
   downloadPlaceholderFile(`report-${reportId}`, content, 'txt')
   showNotification('Report downloaded successfully', 'success')
 }
