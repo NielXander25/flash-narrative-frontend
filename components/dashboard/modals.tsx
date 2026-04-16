@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { X, AlertTriangle, Mail, ChevronDown } from 'lucide-react'
+import { X, AlertTriangle, ChevronDown } from 'lucide-react'
 import { 
   handleSecureTransmit, 
   handleSaveAsDraft,
@@ -235,8 +235,6 @@ export function InitiateCampaignModal({ isOpen, onClose }: InitiateCampaignModal
   const handleNext = () => {
     if (currentStep < 3) {
       setCurrentStep(currentStep + 1)
-    } else {
-      handleLaunchCampaign()
     }
   }
 
@@ -269,6 +267,14 @@ export function InitiateCampaignModal({ isOpen, onClose }: InitiateCampaignModal
     setSelectedIndustry('')
   }
 
+  const handleClose = () => {
+    onClose()
+    setCurrentStep(1)
+    setBrandName('')
+    setCampaignName('')
+    setSelectedIndustry('')
+  }
+
   return (
     <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
       <div className="bg-[#12121A] rounded-lg border border-[#1E1E2E] w-full max-w-md">
@@ -279,13 +285,7 @@ export function InitiateCampaignModal({ isOpen, onClose }: InitiateCampaignModal
             <p className="text-[#94A3B8] text-xs mt-1">Configure intelligence parameters for Flash Narrative</p>
           </div>
           <button 
-            onClick={() => {
-              onClose()
-              setCurrentStep(1)
-              setBrandName('')
-              setCampaignName('')
-              setSelectedIndustry('')
-            }}
+            onClick={handleClose}
             className="text-[#94A3B8] hover:text-[#F8FAFC] flex-shrink-0"
           >
             <X className="w-5 h-5" />
@@ -414,13 +414,7 @@ export function InitiateCampaignModal({ isOpen, onClose }: InitiateCampaignModal
         {/* Actions */}
         <div className="flex items-center justify-between gap-3 p-6 border-t border-[#1E1E2E] bg-[#12121A]">
           <button 
-            onClick={() => {
-              onClose()
-              setCurrentStep(1)
-              setBrandName('')
-              setCampaignName('')
-              setSelectedIndustry('')
-            }}
+            onClick={handleClose}
             className="px-4 py-2 border border-[#1E1E2E] text-[#F8FAFC] rounded-lg font-semibold hover:bg-[#1E1E2E] transition-colors text-xs"
           >
             CANCEL
