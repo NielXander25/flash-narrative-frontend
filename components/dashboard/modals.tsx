@@ -159,8 +159,9 @@ interface InitiateCampaignModalProps {
 }
 
 export function InitiateCampaignModal({ isOpen, onClose }: InitiateCampaignModalProps) {
-  const [selectedAgency, setSelectedAgency] = useState('')
   const [selectedIndustry, setSelectedIndustry] = useState('')
+  const [brandName, setBrandName] = useState('')
+  const [campaignName, setCampaignName] = useState('')
   const [currentStep, setCurrentStep] = useState(1)
 
   if (!isOpen) return null
@@ -175,15 +176,13 @@ export function InitiateCampaignModal({ isOpen, onClose }: InitiateCampaignModal
   }
 
   return (
-    <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4 overflow-y-auto">
-      <div className="bg-[#12121A] rounded-lg border border-[#1E1E2E] w-full max-w-md my-auto">
+    <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+      <div className="bg-[#12121A] rounded-lg border border-[#1E1E2E] w-full max-w-md">
         {/* Header */}
         <div className="flex items-center justify-between p-6 border-b border-[#1E1E2E]">
-          <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded-lg bg-[#D4A017] flex items-center justify-center flex-shrink-0">
-              <span className="text-[#0A0A0F] font-bold">⚡</span>
-            </div>
-            <h2 className="text-lg sm:text-xl font-bold text-[#F8FAFC]">New Campaign</h2>
+          <div>
+            <h2 className="text-lg font-bold text-[#F8FAFC]">Initialize New Campaign</h2>
+            <p className="text-[#94A3B8] text-xs mt-1">Configure intelligence parameters for Flash Narrative</p>
           </div>
           <button onClick={onClose} className="text-[#94A3B8] hover:text-[#F8FAFC] flex-shrink-0">
             <X className="w-5 h-5" />
@@ -191,102 +190,118 @@ export function InitiateCampaignModal({ isOpen, onClose }: InitiateCampaignModal
         </div>
 
         {/* Progress Indicator */}
-        <div className="px-6 pt-6 pb-4">
-          <div className="flex items-center gap-1">
-            {[1, 2, 3].map((step) => (
-              <div key={step} className="flex-1 flex items-center">
-                <div className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold text-center flex-shrink-0 ${
-                  step <= currentStep 
+        <div className="px-6 pt-6 pb-4 border-b border-[#1E1E2E]">
+          <div className="flex items-center justify-between">
+            {[
+              { step: 1, label: 'Identity' },
+              { step: 2, label: 'Scope' },
+              { step: 3, label: 'Execution' }
+            ].map((item, idx) => (
+              <div key={item.step} className="flex items-center flex-1">
+                <div className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold ${
+                  item.step <= currentStep 
                     ? 'bg-[#D4A017] text-[#0A0A0F]' 
                     : 'bg-[#1E1E2E] text-[#94A3B8]'
                 }`}>
-                  {step}
+                  {item.step < currentStep ? '✓' : item.step}
                 </div>
-                {step < 3 && (
-                  <div className={`flex-1 h-1 mx-1 ${
-                    step < currentStep ? 'bg-[#D4A017]' : 'bg-[#1E1E2E]'
+                {idx < 2 && (
+                  <div className={`flex-1 h-0.5 mx-2 ${
+                    item.step < currentStep ? 'bg-[#D4A017]' : 'bg-[#1E1E2E]'
                   }`}></div>
                 )}
               </div>
             ))}
           </div>
-          <p className="text-[#94A3B8] text-xs mt-3">
-            {currentStep === 1 && 'Step 1 of 3: Select Your Agency'}
-            {currentStep === 2 && 'Step 2 of 3: Choose Industry'}
-            {currentStep === 3 && 'Step 3 of 3: Configure Data Stream'}
-          </p>
         </div>
 
-        {/* Content - Scrollable */}
-        <div className="px-6 py-6 space-y-6 max-h-[50vh] sm:max-h-[60vh] overflow-y-auto">
-          {/* Step 1: Agency Select */}
+        {/* Content */}
+        <div className="p-6 space-y-6 max-h-[55vh] overflow-y-auto">
+          {/* Step 1: Identity */}
           {currentStep === 1 && (
-            <div className="space-y-6">
+            <div className="space-y-5">
               <div>
-                <label className="text-[#F8FAFC] font-semibold text-sm mb-3 block">SELECT YOUR AGENCY</label>
-                <div className="relative">
-                  <select 
-                    value={selectedAgency}
-                    onChange={(e) => setSelectedAgency(e.target.value)}
-                    className="w-full bg-[#1E1E2E] border border-[#252535] rounded-lg px-4 py-3 text-[#F8FAFC] appearance-none focus:outline-none focus:border-[#D4A017] transition-colors text-sm"
-                  >
-                    <option value="">Choose Agency</option>
-                    <option value="flash">Flash Narrative Agency</option>
-                    <option value="another">Another Agency</option>
-                    <option value="third">Third Agency</option>
-                  </select>
-                  <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-[#94A3B8] pointer-events-none" />
-                </div>
+                <label className="text-[#F8FAFC] font-semibold text-xs mb-3 block uppercase">BRAND NAME</label>
+                <input
+                  type="text"
+                  value={brandName}
+                  onChange={(e) => setBrandName(e.target.value)}
+                  placeholder="e.g., Zenith Bank"
+                  className="w-full bg-[#1E1E2E] border border-[#252535] rounded-lg px-4 py-3 text-[#F8FAFC] placeholder-[#5B8FD4] text-sm focus:outline-none focus:border-[#D4A017] transition-colors"
+                />
               </div>
-              <p className="text-[#94A3B8] text-xs bg-[#1E1E2E] rounded-lg p-3 border border-[#252535]">
-                💡 Your agency determines access permissions and billing configuration.
-              </p>
+              <div>
+                <label className="text-[#F8FAFC] font-semibold text-xs mb-3 block uppercase">CAMPAIGN NAME</label>
+                <input
+                  type="text"
+                  value={campaignName}
+                  onChange={(e) => setCampaignName(e.target.value)}
+                  placeholder="e.g., Q2 2026 Campaign"
+                  className="w-full bg-[#1E1E2E] border border-[#252535] rounded-lg px-4 py-3 text-[#F8FAFC] placeholder-[#5B8FD4] text-sm focus:outline-none focus:border-[#D4A017] transition-colors"
+                />
+              </div>
             </div>
           )}
 
-          {/* Step 2: Industry Select */}
+          {/* Step 2: Scope */}
           {currentStep === 2 && (
-            <div className="space-y-6">
+            <div className="space-y-5">
               <div>
-                <label className="text-[#F8FAFC] font-semibold text-sm mb-3 block">SELECT INDUSTRY</label>
+                <label className="text-[#F8FAFC] font-semibold text-xs mb-3 block uppercase">INDUSTRY SECTOR</label>
                 <div className="relative">
                   <select 
                     value={selectedIndustry}
                     onChange={(e) => setSelectedIndustry(e.target.value)}
                     className="w-full bg-[#1E1E2E] border border-[#252535] rounded-lg px-4 py-3 text-[#F8FAFC] appearance-none focus:outline-none focus:border-[#D4A017] transition-colors text-sm"
                   >
-                    <option value="">Choose Industry</option>
+                    <option value="">Select Industry...</option>
                     <option value="finance">Finance & Banking</option>
                     <option value="tech">Technology</option>
-                    <option value="energy">Energy</option>
+                    <option value="energy">Energy & Utilities</option>
                     <option value="healthcare">Healthcare</option>
-                    <option value="retail">Retail</option>
+                    <option value="retail">Retail & E-commerce</option>
                   </select>
                   <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-[#94A3B8] pointer-events-none" />
                 </div>
               </div>
-              <p className="text-[#94A3B8] text-xs bg-[#1E1E2E] rounded-lg p-3 border border-[#252535]">
-                💡 Industry selection enables sector-specific keyword targeting.
-              </p>
+              <div className="bg-[#1E1E2E] rounded-lg p-4 border border-[#252535] space-y-2">
+                <div className="flex items-center gap-2 text-[#5B8FD4]">
+                  <span className="text-sm">📊</span>
+                  <p className="text-xs">Step 2: Define Sentiment Thresholds</p>
+                </div>
+              </div>
+              <div className="bg-[#1E1E2E] rounded-lg p-4 border border-[#252535] space-y-2">
+                <div className="flex items-center gap-2 text-[#5B8FD4]">
+                  <span className="text-sm">🎯</span>
+                  <p className="text-xs">Step 3: Alert Configuration</p>
+                </div>
+              </div>
             </div>
           )}
 
-          {/* Step 3: Extra Options */}
+          {/* Step 3: Execution */}
           {currentStep === 3 && (
-            <div className="space-y-6">
-              <div className="space-y-3 bg-[#1E1E2E] rounded-lg p-4 border border-[#252535]">
-                <label className="flex items-center gap-3 cursor-pointer">
-                  <input type="checkbox" className="w-4 h-4 rounded cursor-pointer" defaultChecked />
-                  <span className="text-[#F8FAFC] text-sm font-medium">Use A-Board Benchmark Credentials</span>
-                </label>
-                <label className="flex items-center gap-3 cursor-pointer">
-                  <input type="checkbox" className="w-4 h-4 rounded cursor-pointer" />
-                  <span className="text-[#F8FAFC] text-sm font-medium">Skip A-Board & Real Competitors</span>
-                </label>
+            <div className="space-y-5">
+              <div className="bg-[#1E1E2E] rounded-lg p-4 border border-[#252535] space-y-3">
+                <p className="text-[#F8FAFC] font-semibold text-xs">Campaign Summary</p>
+                <div className="space-y-2 text-xs">
+                  <div className="flex justify-between">
+                    <span className="text-[#94A3B8]">Brand:</span>
+                    <span className="text-[#F8FAFC]">{brandName || 'Not set'}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-[#94A3B8]">Campaign:</span>
+                    <span className="text-[#F8FAFC]">{campaignName || 'Not set'}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-[#94A3B8]">Industry:</span>
+                    <span className="text-[#F8FAFC]">{selectedIndustry || 'Not selected'}</span>
+                  </div>
+                </div>
               </div>
               <div className="bg-[#1E1E2E]/50 rounded-lg p-4 border border-[#252535]">
-                <p className="text-[#94A3B8] text-xs leading-relaxed">
-                  ✅ Your campaign will start monitoring real-time mentions across 500+ news sources and social platforms within the next 24 hours.
+                <p className="text-[#94A3B8] text-xs">
+                  ✅ System will deploy real-time monitoring across 500+ news sources, social platforms, and proprietary feeds within 24 hours.
                 </p>
               </div>
             </div>
@@ -294,18 +309,18 @@ export function InitiateCampaignModal({ isOpen, onClose }: InitiateCampaignModal
         </div>
 
         {/* Actions */}
-        <div className="flex flex-col sm:flex-row gap-3 p-6 border-t border-[#1E1E2E] bg-[#12121A]">
+        <div className="flex items-center justify-between gap-3 p-6 border-t border-[#1E1E2E] bg-[#12121A]">
           <button 
             onClick={onClose}
-            className="flex-1 px-4 py-3 border border-[#1E1E2E] text-[#F8FAFC] rounded-lg font-semibold hover:bg-[#1E1E2E] transition-colors order-2 sm:order-1"
+            className="px-4 py-2 border border-[#1E1E2E] text-[#F8FAFC] rounded-lg font-semibold hover:bg-[#1E1E2E] transition-colors text-xs"
           >
             CANCEL
           </button>
           <button 
             onClick={handleNext}
-            className="flex-1 px-4 py-3 bg-[#D4A017] hover:bg-[#E6B420] text-[#0A0A0F] rounded-lg font-semibold transition-colors order-1 sm:order-2"
+            className="px-6 py-2 bg-[#D4A017] hover:bg-[#E6B420] text-[#0A0A0F] rounded-lg font-semibold transition-colors text-xs"
           >
-            {currentStep === 3 ? 'LAUNCH CAMPAIGN' : 'NEXT STEP'}
+            {currentStep === 3 ? 'LAUNCH CAMPAIGN' : 'Next Step'}
           </button>
         </div>
       </div>
