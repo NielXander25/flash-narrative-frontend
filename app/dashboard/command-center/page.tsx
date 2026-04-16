@@ -4,6 +4,12 @@ import { AlertCircle, TrendingUp, Eye, Clock, Plus, Download } from 'lucide-reac
 import { useState } from 'react'
 import { BRANDS, RECENT_ALERTS } from '@/lib/constants'
 import { InitiateCampaignModal } from '@/components/dashboard/modals'
+import { 
+  handleExportCommandCenter, 
+  handleUpgradeAccess, 
+  handleBrandSelect,
+  showNotification 
+} from '@/lib/button-handlers'
 
 export default function CommandCenterPage() {
   const [selectedBrand, setSelectedBrand] = useState<string | null>(null)
@@ -14,19 +20,19 @@ export default function CommandCenterPage() {
       brand: 'Zenith Bank',
       title: 'Liquidity Speculation',
       severity: 'high',
-      time: '10 mins ago'
+      time: '2 hours ago'
     },
     {
       brand: 'MTN',
       title: 'Infrastructure Vandalism',
       severity: 'high',
-      time: '14 min ago'
+      time: '5 hours ago'
     },
     {
       brand: 'Dangote',
       title: 'Policy Dialogue',
       severity: 'medium',
-      time: '12 min ago'
+      time: '1 day ago'
     }
   ]
 
@@ -40,7 +46,10 @@ export default function CommandCenterPage() {
             <p className="text-[#94A3B8] mt-2 text-sm sm:text-base">Real-time narrative analytics & systemic risk monitoring.</p>
           </div>
           <div className="flex flex-col sm:flex-row gap-2 sm:gap-3">
-            <button className="px-4 sm:px-6 py-2 sm:py-3 border border-[#1E1E2E] text-[#F8FAFC] hover:bg-[#1E1E2E] rounded-lg font-semibold transition-colors text-sm flex items-center justify-center gap-2">
+            <button 
+              onClick={handleExportCommandCenter}
+              className="px-4 sm:px-6 py-2 sm:py-3 border border-[#1E1E2E] text-[#F8FAFC] hover:bg-[#1E1E2E] rounded-lg font-semibold transition-colors text-sm flex items-center justify-center gap-2"
+            >
               <Download className="w-4 h-4" />
               Export
             </button>
@@ -114,7 +123,10 @@ export default function CommandCenterPage() {
               </div>
               <p className="text-4xl font-bold text-[#F8FAFC]">48,291</p>
               <p className="text-[#5B8FD4] text-xs font-semibold mt-2">GLOBAL REACH</p>
-              <button className="w-full mt-4 px-4 py-2 bg-[#D4A017] hover:bg-[#E6B420] text-[#0A0A0F] rounded-lg font-semibold text-xs transition-colors">
+              <button 
+                onClick={handleUpgradeAccess}
+                className="w-full mt-4 px-4 py-2 bg-[#D4A017] hover:bg-[#E6B420] text-[#0A0A0F] rounded-lg font-semibold text-xs transition-colors"
+              >
                 UPGRADE ACCESS
               </button>
             </div>
@@ -157,7 +169,10 @@ export default function CommandCenterPage() {
             {BRANDS.map((brand) => (
               <div 
                 key={brand.id}
-                onClick={() => setSelectedBrand(brand.id)}
+                onClick={() => {
+                  setSelectedBrand(brand.id)
+                  handleBrandSelect(brand.id, brand.name)
+                }}
                 className={`relative rounded-lg overflow-hidden cursor-pointer transition-all border-2 h-48 ${
                   selectedBrand === brand.id 
                     ? 'border-[#D4A017] shadow-lg shadow-[#D4A017]/30' 
