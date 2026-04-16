@@ -236,7 +236,7 @@ export function InitiateCampaignModal({ isOpen, onClose }: InitiateCampaignModal
     if (currentStep < 3) {
       setCurrentStep(currentStep + 1)
     } else {
-      handleNext()
+      handleLaunchCampaign()
     }
   }
 
