@@ -1,11 +1,13 @@
 'use client'
 
-import { AlertCircle, TrendingUp, Eye, Clock } from 'lucide-react'
+import { AlertCircle, TrendingUp, Eye, Clock, Plus } from 'lucide-react'
 import { useState } from 'react'
 import { BRANDS, RECENT_ALERTS } from '@/lib/constants'
+import { InitiateCampaignModal } from '@/components/dashboard/modals'
 
 export default function CommandCenterPage() {
   const [selectedBrand, setSelectedBrand] = useState<string | null>(null)
+  const [showCampaignModal, setShowCampaignModal] = useState(false)
 
   const recentAlerts = [
     {
@@ -74,54 +76,72 @@ export default function CommandCenterPage() {
             </div>
           </div>
 
+          {/* NEW CAMPAIGN WIZARD SECTION */}
           <div className="mb-8">
-            <h2 className="text-lg sm:text-xl font-bold text-[#F8FAFC] mb-4">AGENCY PORTFOLIO</h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-4 sm:gap-6">
-              {BRANDS.map((brand) => (
-                <div 
-                  key={brand.id}
-                  onClick={() => setSelectedBrand(brand.id)}
-                  className={`relative rounded-lg overflow-hidden cursor-pointer transition-all border-2 ${
-                    selectedBrand === brand.id 
-                      ? 'border-[#D4A017] shadow-lg shadow-[#D4A017]/30' 
-                      : 'border-[#1E1E2E] hover:border-[#D4A017]'
-                  }`}
-                >
-                  {/* Thumbnail Background */}
-                  <img 
-                    src={brand.thumbnail} 
-                    alt={brand.name}
-                    className="w-full h-40 object-cover opacity-40"
-                  />
-                  
-                  {/* Overlay Content */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#12121A] to-transparent flex flex-col justify-between p-4">
-                    <div className="flex justify-between items-start">
-                      <div>
-                        <h3 className="text-lg font-bold text-[#F8FAFC]">{brand.name}</h3>
-                        <p className="text-[#94A3B8] text-sm">{brand.client}</p>
-                      </div>
-                      <div className={`px-2 py-1 rounded text-xs font-semibold ${
-                        brand.alerts > 0 ? 'bg-[#E84242] text-white' : 'bg-[#2ECC8A] text-white'
-                      }`}>
-                        {brand.alerts} Alert{brand.alerts !== 1 ? 's' : ''}
-                      </div>
-                    </div>
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
+              <div>
+                <h2 className="text-lg sm:text-xl font-bold text-[#F8FAFC] mb-1">ACTIVE CAMPAIGNS</h2>
+                <p className="text-[#94A3B8] text-sm">Monitor all your brand campaigns in real-time</p>
+              </div>
+              <button
+                onClick={() => setShowCampaignModal(true)}
+                className="w-full sm:w-auto px-4 sm:px-6 py-2 sm:py-3 bg-[#D4A017] hover:bg-[#E6B420] text-[#0A0A0F] font-semibold h-10 sm:h-11 rounded-lg flex items-center justify-center gap-2 transition-colors text-sm flex-shrink-0"
+              >
+                <Plus className="w-5 h-5" />
+                New Campaign
+              </button>
+            </div>
 
-                    <div className="flex justify-between items-end">
-                      <div>
-                        <p className="text-[#94A3B8] text-xs mb-1">Mentions</p>
-                        <p className="text-2xl font-bold text-[#F8FAFC]">{brand.mentions}</p>
+            {/* AGENCY PORTFOLIO SECTION */}
+            <div>
+              <h2 className="text-lg sm:text-xl font-bold text-[#F8FAFC] mb-4">AGENCY PORTFOLIO</h2>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-4 sm:gap-6">
+                {BRANDS.map((brand) => (
+                  <div 
+                    key={brand.id}
+                    onClick={() => setSelectedBrand(brand.id)}
+                    className={`relative rounded-lg overflow-hidden cursor-pointer transition-all border-2 ${
+                      selectedBrand === brand.id 
+                        ? 'border-[#D4A017] shadow-lg shadow-[#D4A017]/30' 
+                        : 'border-[#1E1E2E] hover:border-[#D4A017]'
+                    }`}
+                  >
+                    {/* Thumbnail Background */}
+                    <img 
+                      src={brand.thumbnail} 
+                      alt={brand.name}
+                      className="w-full h-40 object-cover opacity-40"
+                    />
+                    
+                    {/* Overlay Content */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#12121A] to-transparent flex flex-col justify-between p-4">
+                      <div className="flex justify-between items-start">
+                        <div>
+                          <h3 className="text-lg font-bold text-[#F8FAFC]">{brand.name}</h3>
+                          <p className="text-[#94A3B8] text-sm">{brand.client}</p>
+                        </div>
+                        <div className={`px-2 py-1 rounded text-xs font-semibold ${
+                          brand.alerts > 0 ? 'bg-[#E84242] text-white' : 'bg-[#2ECC8A] text-white'
+                        }`}>
+                          {brand.alerts} Alert{brand.alerts !== 1 ? 's' : ''}
+                        </div>
                       </div>
-                      <div className={`text-sm font-semibold ${
-                        brand.trend.startsWith('+') ? 'text-[#2ECC8A]' : 'text-[#E8832A]'
-                      }`}>
-                        {brand.trend}
+
+                      <div className="flex justify-between items-end">
+                        <div>
+                          <p className="text-[#94A3B8] text-xs mb-1">Mentions</p>
+                          <p className="text-2xl font-bold text-[#F8FAFC]">{brand.mentions}</p>
+                        </div>
+                        <div className={`text-sm font-semibold ${
+                          brand.trend.startsWith('+') ? 'text-[#2ECC8A]' : 'text-[#E8832A]'
+                        }`}>
+                          {brand.trend}
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
           </div>
         </div>
@@ -157,6 +177,12 @@ export default function CommandCenterPage() {
           </div>
         </div>
       </div>
+
+      {/* CAMPAIGN MODAL */}
+      <InitiateCampaignModal 
+        isOpen={showCampaignModal} 
+        onClose={() => setShowCampaignModal(false)} 
+      />
     </div>
   )
 }
