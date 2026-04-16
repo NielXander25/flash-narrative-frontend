@@ -2,6 +2,13 @@
 
 import { useState } from 'react'
 import { X, AlertTriangle, Mail, ChevronDown } from 'lucide-react'
+import { 
+  handleSecureTransmit, 
+  handleSaveAsDraft,
+  handleNewCampaign,
+  handleRevokeAPIKey,
+  showNotification 
+} from '@/lib/button-handlers'
 
 interface RevokeAPIKeyModalProps {
   isOpen: boolean
@@ -36,7 +43,13 @@ export function RevokeAPIKeyModal({ isOpen, onClose, keyName = 'Production' }: R
           >
             Cancel
           </button>
-          <button className="flex-1 px-4 py-3 bg-[#E8832A] hover:bg-[#D46E1F] text-white rounded-lg font-semibold transition-colors order-1 sm:order-2">
+          <button 
+            onClick={() => {
+              handleRevokeAPIKey(keyName)
+              onClose()
+            }}
+            className="flex-1 px-4 py-3 bg-[#E8832A] hover:bg-[#D46E1F] text-white rounded-lg font-semibold transition-colors order-1 sm:order-2"
+          >
             Revoke Key
           </button>
         </div>
@@ -51,12 +64,56 @@ interface SendReportModalProps {
 }
 
 export function SendReportModal({ isOpen, onClose }: SendReportModalProps) {
+  const [recipientEmail, setRecipientEmail] = useState('')
+  const [subject, setSubject] = useState('')
+  const [message, setMessage] = useState('')
   const [deliveryOptions, setDeliveryOptions] = useState({
     subscription: true,
     selfService: false
   })
 
   if (!isOpen) return null
+
+  const handleTransmit = () => {
+    if (!recipientEmail) {
+      showNotification('Please enter recipient email', 'error')
+      return
+    }
+    if (!subject) {
+      showNotification('Please enter subject', 'error')
+      return
+    }
+
+    const reportData = {
+      recipient: recipientEmail,
+      subject: subject,
+      message: message,
+      deliveryOptions: deliveryOptions,
+      timestamp: new Date().toISOString()
+    }
+    
+    handleSecureTransmit(reportData)
+    onClose()
+    setRecipientEmail('')
+    setSubject('')
+    setMessage('')
+  }
+
+  const handleDraft = () => {
+    const draftData = {
+      recipient: recipientEmail,
+      subject: subject,
+      message: message,
+      deliveryOptions: deliveryOptions,
+      timestamp: new Date().toISOString()
+    }
+    
+    handleSaveAsDraft(draftData)
+    onClose()
+    setRecipientEmail('')
+    setSubject('')
+    setMessage('')
+  }
 
   return (
     <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
@@ -74,7 +131,9 @@ export function SendReportModal({ isOpen, onClose }: SendReportModalProps) {
           <div>
             <label className="text-[#F8FAFC] font-semibold text-sm mb-3 block">RECIPIENT'S</label>
             <input 
-              type="email" 
+              type="email"
+              value={recipientEmail}
+              onChange={(e) => setRecipientEmail(e.target.value)}
               placeholder="example@client-acronym.io"
               className="w-full bg-[#1E1E2E] border border-[#252535] rounded-lg px-4 py-3 text-[#F8FAFC] placeholder-[#5B8FD4] focus:outline-none focus:border-[#D4A017] transition-colors text-sm"
             />
@@ -85,7 +144,9 @@ export function SendReportModal({ isOpen, onClose }: SendReportModalProps) {
             <div>
               <label className="text-[#F8FAFC] font-semibold text-sm mb-3 block">SUBJECT</label>
               <input 
-                type="text" 
+                type="text"
+                value={subject}
+                onChange={(e) => setSubject(e.target.value)}
                 placeholder="URGENT Q1 Intelligence Briefing"
                 className="w-full bg-[#1E1E2E] border border-[#252535] rounded-lg px-4 py-3 text-[#F8FAFC] placeholder-[#5B8FD4] text-sm focus:outline-none focus:border-[#D4A017] transition-colors"
               />
@@ -93,7 +154,9 @@ export function SendReportModal({ isOpen, onClose }: SendReportModalProps) {
             <div>
               <label className="text-[#F8FAFC] font-semibold text-sm mb-3 block">MESSAGE</label>
               <input 
-                type="text" 
+                type="text"
+                value={message}
+                onChange={(e) => setMessage(e.target.value)}
                 placeholder="Please find attached your monthly brief"
                 className="w-full bg-[#1E1E2E] border border-[#252535] rounded-lg px-4 py-3 text-[#F8FAFC] placeholder-[#5B8FD4] text-sm focus:outline-none focus:border-[#D4A017] transition-colors"
               />
@@ -129,7 +192,7 @@ export function SendReportModal({ isOpen, onClose }: SendReportModalProps) {
           {/* Attachments Section */}
           <div>
             <label className="text-[#F8FAFC] font-semibold text-sm mb-3 block">CUSTOM ATTACHMENTS</label>
-            <div className="border-2 border-dashed border-[#1E1E2E] rounded-lg p-6 text-center hover:border-[#D4A017] transition-colors">
+            <div className="border-2 border-dashed border-[#1E1E2E] rounded-lg p-6 text-center hover:border-[#D4A017] transition-colors cursor-pointer">
               <p className="text-[#94A3B8] text-sm">Drag and drop files or click to select</p>
               <p className="text-[#5B8FD4] text-xs mt-1">PDF, Excel, or doc files supported</p>
             </div>
@@ -139,12 +202,15 @@ export function SendReportModal({ isOpen, onClose }: SendReportModalProps) {
         {/* Footer */}
         <div className="sticky bottom-0 flex flex-col sm:flex-row items-center justify-between gap-4 p-6 sm:p-8 border-t border-[#1E1E2E] bg-[#12121A]">
           <button 
-            onClick={onClose}
+            onClick={handleDraft}
             className="w-full sm:w-auto px-6 py-3 border border-[#1E1E2E] text-[#F8FAFC] rounded-lg font-semibold hover:bg-[#1E1E2E] transition-colors"
           >
             Drafts
           </button>
-          <button className="w-full sm:w-auto px-8 py-3 bg-[#D4A017] hover:bg-[#E6B420] text-[#0A0A0F] rounded-lg font-semibold transition-colors">
+          <button 
+            onClick={handleTransmit}
+            className="w-full sm:w-auto px-8 py-3 bg-[#D4A017] hover:bg-[#E6B420] text-[#0A0A0F] rounded-lg font-semibold transition-colors"
+          >
             🔒 SECURE TRANSMIT
           </button>
         </div>
@@ -170,9 +236,37 @@ export function InitiateCampaignModal({ isOpen, onClose }: InitiateCampaignModal
     if (currentStep < 3) {
       setCurrentStep(currentStep + 1)
     } else {
-      onClose()
-      setCurrentStep(1)
+      handleNext()
     }
+  }
+
+  const handleLaunchCampaign = () => {
+    if (!brandName) {
+      showNotification('Please enter brand name', 'error')
+      return
+    }
+    if (!campaignName) {
+      showNotification('Please enter campaign name', 'error')
+      return
+    }
+    if (!selectedIndustry) {
+      showNotification('Please select industry', 'error')
+      return
+    }
+
+    const campaignData = {
+      brandName: brandName,
+      campaignName: campaignName,
+      industry: selectedIndustry,
+      timestamp: new Date().toISOString()
+    }
+
+    handleNewCampaign(campaignData)
+    onClose()
+    setCurrentStep(1)
+    setBrandName('')
+    setCampaignName('')
+    setSelectedIndustry('')
   }
 
   return (
@@ -184,7 +278,16 @@ export function InitiateCampaignModal({ isOpen, onClose }: InitiateCampaignModal
             <h2 className="text-lg font-bold text-[#F8FAFC]">Initialize New Campaign</h2>
             <p className="text-[#94A3B8] text-xs mt-1">Configure intelligence parameters for Flash Narrative</p>
           </div>
-          <button onClick={onClose} className="text-[#94A3B8] hover:text-[#F8FAFC] flex-shrink-0">
+          <button 
+            onClick={() => {
+              onClose()
+              setCurrentStep(1)
+              setBrandName('')
+              setCampaignName('')
+              setSelectedIndustry('')
+            }}
+            className="text-[#94A3B8] hover:text-[#F8FAFC] flex-shrink-0"
+          >
             <X className="w-5 h-5" />
           </button>
         </div>
@@ -311,13 +414,25 @@ export function InitiateCampaignModal({ isOpen, onClose }: InitiateCampaignModal
         {/* Actions */}
         <div className="flex items-center justify-between gap-3 p-6 border-t border-[#1E1E2E] bg-[#12121A]">
           <button 
-            onClick={onClose}
+            onClick={() => {
+              onClose()
+              setCurrentStep(1)
+              setBrandName('')
+              setCampaignName('')
+              setSelectedIndustry('')
+            }}
             className="px-4 py-2 border border-[#1E1E2E] text-[#F8FAFC] rounded-lg font-semibold hover:bg-[#1E1E2E] transition-colors text-xs"
           >
             CANCEL
           </button>
           <button 
-            onClick={handleNext}
+            onClick={() => {
+              if (currentStep === 3) {
+                handleLaunchCampaign()
+              } else {
+                handleNext()
+              }
+            }}
             className="px-6 py-2 bg-[#D4A017] hover:bg-[#E6B420] text-[#0A0A0F] rounded-lg font-semibold transition-colors text-xs"
           >
             {currentStep === 3 ? 'LAUNCH CAMPAIGN' : 'Next Step'}
