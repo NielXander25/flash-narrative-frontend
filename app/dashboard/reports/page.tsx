@@ -1,8 +1,16 @@
 'use client'
 
 import { useState } from 'react'
-import { Plus, Download, FileText, Clock, CheckCircle, AlertCircle, MoreVertical, Send } from 'lucide-react'
+import { Plus, Download, FileText, MoreVertical, Send, Share2 } from 'lucide-react'
 import { SendReportModal } from '@/components/dashboard/modals'
+import { 
+  handleExportReport, 
+  handleDownloadReport, 
+  handleShareReport, 
+  handleDeleteReport,
+  handleGenerateReport,
+  showNotification 
+} from '@/lib/button-handlers'
 
 export default function ReportsPage() {
   const [showReportModal, setShowReportModal] = useState(false)
@@ -79,8 +87,11 @@ export default function ReportsPage() {
               <h2 className="text-lg sm:text-xl font-bold text-[#F8FAFC]">REPORTS</h2>
               <p className="text-[#94A3B8] text-xs mt-1">8 total reports this month</p>
             </div>
-            <button className="px-3 py-1 text-[#D4A017] hover:text-[#E6B420] text-xs font-semibold transition-colors">
-              VIEW ALL
+            <button 
+              onClick={handleExportReport}
+              className="px-3 py-1 text-[#D4A017] hover:text-[#E6B420] text-xs font-semibold transition-colors"
+            >
+              EXPORT ALL
             </button>
           </div>
 
@@ -110,11 +121,14 @@ export default function ReportsPage() {
                       <h3 className="text-[#F8FAFC] text-sm font-semibold">{report.campaign}</h3>
                       <p className="text-[#94A3B8] text-xs mt-1">{report.type}</p>
                     </div>
-                    <button className="text-[#94A3B8] hover:text-[#F8FAFC]">
+                    <button 
+                      onClick={() => showNotification('Opening options menu...', 'info')}
+                      className="text-[#94A3B8] hover:text-[#F8FAFC]"
+                    >
                       <MoreVertical className="w-4 h-4" />
                     </button>
                   </div>
-                  <div className="grid grid-cols-3 gap-3">
+                  <div className="grid grid-cols-3 gap-3 mb-4">
                     <div>
                       <p className="text-[#94A3B8] text-xs uppercase mb-1">Created</p>
                       <p className="text-[#F8FAFC] text-xs">{report.createdDate}</p>
@@ -129,6 +143,22 @@ export default function ReportsPage() {
                         {report.status}
                       </span>
                     </div>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <button 
+                      onClick={() => handleDownloadReport(report.id.toString(), report.campaign)}
+                      className="flex-1 px-3 py-2 bg-[#1E1E2E] hover:bg-[#252535] rounded text-[#94A3B8] hover:text-[#F8FAFC] text-xs font-semibold transition-colors flex items-center justify-center gap-2"
+                    >
+                      <Download className="w-3 h-3" />
+                      Download
+                    </button>
+                    <button 
+                      onClick={() => handleShareReport(report.id.toString())}
+                      className="flex-1 px-3 py-2 bg-[#1E1E2E] hover:bg-[#252535] rounded text-[#94A3B8] hover:text-[#F8FAFC] text-xs font-semibold transition-colors flex items-center justify-center gap-2"
+                    >
+                      <Share2 className="w-3 h-3" />
+                      Share
+                    </button>
                   </div>
                 </div>
 
@@ -156,7 +186,25 @@ export default function ReportsPage() {
                     >
                       <Send className="w-4 h-4" />
                     </button>
-                    <button className="p-1 hover:bg-[#1E1E2E] rounded transition-colors text-[#94A3B8] hover:text-[#F8FAFC]" title="More options">
+                    <button 
+                      onClick={() => handleDownloadReport(report.id.toString(), report.campaign)}
+                      className="p-1 hover:bg-[#1E1E2E] rounded transition-colors text-[#94A3B8] hover:text-[#F8FAFC]"
+                      title="Download"
+                    >
+                      <Download className="w-4 h-4" />
+                    </button>
+                    <button 
+                      onClick={() => handleShareReport(report.id.toString())}
+                      className="p-1 hover:bg-[#1E1E2E] rounded transition-colors text-[#94A3B8] hover:text-[#F8FAFC]"
+                      title="Share"
+                    >
+                      <Share2 className="w-4 h-4" />
+                    </button>
+                    <button 
+                      onClick={() => showNotification('Opening options menu...', 'info')}
+                      className="p-1 hover:bg-[#1E1E2E] rounded transition-colors text-[#94A3B8] hover:text-[#F8FAFC]"
+                      title="More options"
+                    >
                       <MoreVertical className="w-4 h-4" />
                     </button>
                   </div>
@@ -217,6 +265,20 @@ function GenerateReportModal({ isOpen, onClose }: GenerateReportModalProps) {
 
   if (!isOpen) return null
 
+  const handleBuildReport = () => {
+    if (!selectedCampaign) {
+      showNotification('Please select a campaign', 'error')
+      return
+    }
+    if (!templateId) {
+      showNotification('Please select a template', 'error')
+      return
+    }
+    
+    handleGenerateReport(selectedCampaign, templateId)
+    onClose()
+  }
+
   return (
     <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
       <div className="bg-[#12121A] rounded-lg border border-[#1E1E2E] w-full max-w-md">
@@ -226,7 +288,10 @@ function GenerateReportModal({ isOpen, onClose }: GenerateReportModalProps) {
             <h2 className="text-lg font-bold text-[#F8FAFC]">Generate Report</h2>
             <p className="text-[#94A3B8] text-xs mt-1">Select campaign and template to build report</p>
           </div>
-          <button onClick={onClose} className="text-[#94A3B8] hover:text-[#F8FAFC]">
+          <button 
+            onClick={onClose}
+            className="text-[#94A3B8] hover:text-[#F8FAFC]"
+          >
             <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
               <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" />
             </svg>
@@ -292,7 +357,10 @@ function GenerateReportModal({ isOpen, onClose }: GenerateReportModalProps) {
           >
             CANCEL
           </button>
-          <button className="px-6 py-2 bg-[#D4A017] hover:bg-[#E6B420] text-[#0A0A0F] rounded-lg font-semibold transition-colors text-xs">
+          <button 
+            onClick={handleBuildReport}
+            className="px-6 py-2 bg-[#D4A017] hover:bg-[#E6B420] text-[#0A0A0F] rounded-lg font-semibold transition-colors text-xs"
+          >
             BUILD REPORT
           </button>
         </div>
