@@ -1,13 +1,8 @@
 import { downloadPlaceholderFile, generatePlaceholderReport, generatePlaceholderJSON } from './download-utils'
 
-// Toast notification (you can replace with your toast library)
 export const showNotification = (message: string, type: 'success' | 'error' | 'info' = 'info') => {
   console.log(`[${type.toUpperCase()}] ${message}`)
 }
-
-// ============================================
-// COMMAND CENTER HANDLERS
-// ============================================
 
 export function handleExportCommandCenter() {
   const content = generatePlaceholderReport('Global Command Center')
@@ -26,10 +21,6 @@ export function handleUpgradeAccess() {
 export function handleBrandSelect(brandId: string, brandName: string) {
   showNotification(`Selected brand: ${brandName}`, 'info')
 }
-
-// ============================================
-// REPORTS HANDLERS
-// ============================================
 
 export function handleExportReport() {
   const content = generatePlaceholderReport('Reports Command Center')
@@ -59,10 +50,6 @@ export function handleDeleteReport(reportId: string) {
   showNotification('Report deleted successfully', 'success')
 }
 
-// ============================================
-// DASHBOARD HANDLERS
-// ============================================
-
 export function handleNewCampaign(campaignData: any) {
   showNotification(`Creating campaign: ${campaignData.brandName}`, 'info')
 }
@@ -70,10 +57,6 @@ export function handleNewCampaign(campaignData: any) {
 export function handleViewIntelligence(campaignId: string) {
   showNotification('Opening intelligence dashboard...', 'info')
 }
-
-// ============================================
-// SETTINGS HANDLERS
-// ============================================
 
 export function handleSaveSettings(settingsData: any) {
   showNotification('Settings saved successfully', 'success')
@@ -88,10 +71,6 @@ export function handleUpdateTheme(colors: any) {
   document.documentElement.style.setProperty('--primary', colors.primary)
   document.documentElement.style.setProperty('--primary-hover', colors.primaryHover)
 }
-
-// ============================================
-// API HUB HANDLERS
-// ============================================
 
 export function handleGenerateAPIKey() {
   const newKey = `fln_${Math.random().toString(36).substring(2, 15)}_${Date.now()}`
@@ -114,10 +93,6 @@ export function handleDownloadAPIKey() {
   showNotification('API configuration downloaded', 'success')
 }
 
-// ============================================
-// LOGIN/SIGNUP HANDLERS
-// ============================================
-
 export function handleGoogleSignup() {
   showNotification('Initiating Google OAuth signup...', 'info')
 }
@@ -125,10 +100,6 @@ export function handleGoogleSignup() {
 export function handleGoogleLogin() {
   showNotification('Initiating Google OAuth login...', 'info')
 }
-
-// ============================================
-// MODAL HANDLERS
-// ============================================
 
 export function handleSecureTransmit(reportData: any) {
   showNotification('Report transmitted securely', 'success')
