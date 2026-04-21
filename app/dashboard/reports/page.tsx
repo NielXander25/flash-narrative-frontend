@@ -77,7 +77,7 @@ export default function ReportsPage() {
             className="w-full sm:w-auto px-4 sm:px-6 py-2 sm:py-3 bg-[#D4A017] hover:bg-[#E6B420] text-[#0A0A0F] rounded-lg font-semibold transition-colors text-sm flex items-center justify-center gap-2"
           >
             <Plus className="w-4 h-4" />
-             New Report
+            + New Report
           </button>
         </div>
       </div>
