@@ -2,8 +2,8 @@
 
 import Link from 'next/link'
 import Image from 'next/image'
-import { usePathname } from 'next/navigation'
-import { LucideIcon } from 'lucide-react'
+import { usePathname, useRouter } from 'next/navigation'
+import { LucideIcon, LogOut, HelpCircle } from 'lucide-react'
 
 interface NavItem {
   label: string
@@ -22,12 +22,20 @@ interface SidebarProps {
  */
 export function Sidebar({ items, onNavigate }: SidebarProps) {
   const pathname = usePathname()
+  const router = useRouter()
+
+  const handleSignOut = () => {
+    // Add sign out logic here
+    router.push('/login')
+  }
 
   return (
     <div className="w-64 bg-[#12121A] border-r border-[#1E1E2E] flex flex-col p-6 h-screen overflow-y-auto">
       <LogoSection />
       <NavigationMenu items={items} pathname={pathname} onNavigate={onNavigate} />
-      <WorkspaceSwitcher />
+      <div className="mt-auto space-y-3 border-t border-[#1E1E2E] pt-6">
+        <BottomMenuItems onSignOut={handleSignOut} />
+      </div>
     </div>
   )
 }
@@ -49,7 +57,10 @@ function LogoSection() {
           priority
         />
       </div>
-      <span className="text-[#F8FAFC] font-bold text-lg">FLASH NARRATIVE</span>
+      <div className="flex flex-col">
+        <span className="text-[#F8FAFC] font-bold text-sm">⚡ FLASH</span>
+        <span className="text-[#D4A017] font-bold text-xs">NARRATIVE</span>
+      </div>
     </div>
   )
 }
@@ -110,25 +121,32 @@ function NavigationLink({ item, isActive, onNavigate }: NavigationLinkProps) {
 }
 
 /**
- * Workspace Switcher Component
- * Displays current workspace with option to switch
+ * Bottom Menu Items Component
+ * Help + Support and Sign Out buttons
  */
-function WorkspaceSwitcher() {
+interface BottomMenuItemsProps {
+  onSignOut: () => void
+}
+
+function BottomMenuItems({ onSignOut }: BottomMenuItemsProps) {
   return (
-    <div className="border-t border-[#1E1E2E] pt-6">
+    <>
       <button
-        className="w-full flex items-center gap-3 px-4 py-3 rounded-lg bg-[#1E1E2E] hover:bg-[#252535] text-[#94A3B8] hover:text-[#F8FAFC] transition-colors text-sm font-medium"
-        aria-label="Workspace switcher"
-        title="Click to switch workspaces"
+        className="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-[#94A3B8] hover:bg-[#1E1E2E] hover:text-[#F8FAFC] transition-colors text-sm font-medium"
+        title="Help & Support"
       >
-        <div className="w-8 h-8 rounded-full bg-[#D4A017] flex items-center justify-center flex-shrink-0">
-          <span className="text-[#0A0A0F] text-xs font-bold">Z</span>
-        </div>
-        <div className="flex-1 text-left">
-          <p className="text-[#F8FAFC] font-medium">Zenith Bank</p>
-          <p className="text-[#5B8FD4] text-xs">Account</p>
-        </div>
+        <HelpCircle className="w-5 h-5 flex-shrink-0" />
+        <span>Help + Support</span>
       </button>
-    </div>
+
+      <button
+        onClick={onSignOut}
+        className="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-[#94A3B8] hover:bg-[#E84242]/10 hover:text-[#E84242] transition-colors text-sm font-medium"
+        title="Sign Out"
+      >
+        <LogOut className="w-5 h-5 flex-shrink-0" />
+        <span>Sign Out</span>
+      </button>
+    </>
   )
 }
