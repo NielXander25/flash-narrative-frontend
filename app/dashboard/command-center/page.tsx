@@ -154,7 +154,6 @@ export default function CommandCenterPage() {
               <h2 className="text-lg sm:text-xl font-bold text-[#F8FAFC]">AGENCY PORTFOLIO</h2>
               <p className="text-[#94A3B8] text-sm mt-1">All tracked brands and their performance metrics</p>
             </div>
-            {/* REMOVED: Extra + New Report button that was here */}
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
