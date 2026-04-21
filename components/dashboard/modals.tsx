@@ -179,7 +179,7 @@ export function InitiateCampaignModal({ isOpen, onClose }: InitiateCampaignModal
 
   return (
     <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-      <div className="bg-[#12121A] rounded-lg border border-[#1E1E2E] w-full max-w-md">
+      <div className="bg-[#12121A] rounded-lg border border-[#1E1E2E] w-full max-w-md overflow-hidden">
         {/* Header */}
         <div className="flex items-center justify-between p-6 border-b border-[#1E1E2E]">
           <div>
@@ -191,13 +191,14 @@ export function InitiateCampaignModal({ isOpen, onClose }: InitiateCampaignModal
           </button>
         </div>
 
-        {/* Step Indicators with Gold Underline */}
-        <div className="px-6 pt-6 pb-4 border-b border-[#1E1E2E]">
-          <div className="flex items-center justify-between gap-2">
+        {/* Step Indicators - FIXED TO STAY INSIDE MODAL */}
+        <div className="px-6 py-6 border-b border-[#1E1E2E]">
+          {/* Steps Row */}
+          <div className="flex items-center justify-between gap-1 mb-4">
             {steps.map((step, index) => (
               <div key={index} className="flex items-center flex-1">
                 {/* Step Circle */}
-                <div className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0 transition-all ${
+                <div className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0 ${
                   index + 1 <= currentStep 
                     ? 'bg-[#D4A017] text-[#0A0A0F]' 
                     : 'bg-[#1E1E2E] text-[#94A3B8]'
@@ -205,9 +206,9 @@ export function InitiateCampaignModal({ isOpen, onClose }: InitiateCampaignModal
                   {index + 1}
                 </div>
                 
-                {/* Step Label */}
-                <div className="flex-1 px-3">
-                  <p className={`text-xs font-medium ${
+                {/* Step Label - CENTERED */}
+                <div className="flex-1 px-1">
+                  <p className={`text-xs font-medium text-center whitespace-nowrap ${
                     index + 1 === currentStep 
                       ? 'text-[#D4A017]' 
                       : index + 1 < currentStep
@@ -220,7 +221,7 @@ export function InitiateCampaignModal({ isOpen, onClose }: InitiateCampaignModal
 
                 {/* Connecting Line */}
                 {index < steps.length - 1 && (
-                  <div className={`w-12 h-0.5 flex-shrink-0 ${
+                  <div className={`w-8 h-1 flex-shrink-0 ${
                     index < currentStep - 1 ? 'bg-[#D4A017]' : 'bg-[#1E1E2E]'
                   }`}></div>
                 )}
@@ -228,8 +229,8 @@ export function InitiateCampaignModal({ isOpen, onClose }: InitiateCampaignModal
             ))}
           </div>
 
-          {/* Gold Underline for Active Step */}
-          <div className="mt-4 h-1 bg-[#1E1E2E] rounded-full overflow-hidden">
+          {/* Full Width Gold Progress Bar */}
+          <div className="h-1 bg-[#1E1E2E] rounded-full overflow-hidden">
             <div 
               className="h-full bg-[#D4A017] transition-all duration-300"
               style={{ width: `${(currentStep / steps.length) * 100}%` }}
@@ -238,7 +239,7 @@ export function InitiateCampaignModal({ isOpen, onClose }: InitiateCampaignModal
         </div>
 
         {/* Form Content */}
-        <div className="p-6 space-y-6 max-h-[55vh] overflow-y-auto">
+        <div className="p-6 space-y-6 max-h-[45vh] overflow-y-auto">
           {currentStep === 1 && (
             <div className="space-y-5">
               <div>
@@ -248,7 +249,7 @@ export function InitiateCampaignModal({ isOpen, onClose }: InitiateCampaignModal
                   value={brandName} 
                   onChange={(e) => setBrandName(e.target.value)} 
                   placeholder="e.g., Zenith Bank" 
-                  className="w-full bg-[#1E1E2E] border border-[#252535] rounded-lg px-4 py-3 text-[#F8FAFC] placeholder-[#5B8FD4] focus:outline-none focus:border-[#D4A017] transition-colors"
+                  className="w-full bg-[#1E1E2E] border border-[#252535] rounded-lg px-4 py-3 text-[#F8FAFC] placeholder-[#5B8FD4] focus:outline-none focus:border-[#D4A017]"
                 />
               </div>
               <div>
@@ -258,7 +259,7 @@ export function InitiateCampaignModal({ isOpen, onClose }: InitiateCampaignModal
                   value={campaignName} 
                   onChange={(e) => setCampaignName(e.target.value)} 
                   placeholder="e.g., Q2 2026 Initiative" 
-                  className="w-full bg-[#1E1E2E] border border-[#252535] rounded-lg px-4 py-3 text-[#F8FAFC] placeholder-[#5B8FD4] focus:outline-none focus:border-[#D4A017] transition-colors"
+                  className="w-full bg-[#1E1E2E] border border-[#252535] rounded-lg px-4 py-3 text-[#F8FAFC] placeholder-[#5B8FD4] focus:outline-none focus:border-[#D4A017]"
                 />
               </div>
               <div>
@@ -267,7 +268,7 @@ export function InitiateCampaignModal({ isOpen, onClose }: InitiateCampaignModal
                   <select 
                     value={selectedIndustry} 
                     onChange={(e) => setSelectedIndustry(e.target.value)} 
-                    className="w-full bg-[#1E1E2E] border border-[#252535] rounded-lg px-4 py-3 text-[#F8FAFC] focus:outline-none focus:border-[#D4A017] transition-colors appearance-none"
+                    className="w-full bg-[#1E1E2E] border border-[#252535] rounded-lg px-4 py-3 text-[#F8FAFC] focus:outline-none focus:border-[#D4A017] appearance-none"
                   >
                     <option value="">Select Industry...</option>
                     <option value="finance">Finance & Banking</option>
@@ -275,8 +276,6 @@ export function InitiateCampaignModal({ isOpen, onClose }: InitiateCampaignModal
                     <option value="energy">Energy & Utilities</option>
                     <option value="healthcare">Healthcare</option>
                     <option value="retail">Retail & Consumer</option>
-                    <option value="telecom">Telecommunications</option>
-                    <option value="aerospace">Aerospace & Defense</option>
                   </select>
                   <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-[#94A3B8] pointer-events-none" />
                 </div>
@@ -286,35 +285,28 @@ export function InitiateCampaignModal({ isOpen, onClose }: InitiateCampaignModal
 
           {currentStep === 2 && (
             <div className="space-y-5">
-              <div className="bg-[#1E1E2E] rounded-lg p-4 border border-[#252535]">
-                <p className="text-[#F8FAFC] font-semibold text-xs mb-3 uppercase">Intelligence Scope</p>
-                <div className="space-y-3">
-                  <label className="flex items-center gap-3 cursor-pointer">
-                    <input type="checkbox" defaultChecked className="w-4 h-4 accent-[#D4A017]" />
-                    <span className="text-[#F8FAFC] text-xs">News & Media Monitoring</span>
-                  </label>
-                  <label className="flex items-center gap-3 cursor-pointer">
-                    <input type="checkbox" defaultChecked className="w-4 h-4 accent-[#D4A017]" />
-                    <span className="text-[#F8FAFC] text-xs">Social Media & Web Mentions</span>
-                  </label>
-                  <label className="flex items-center gap-3 cursor-pointer">
-                    <input type="checkbox" defaultChecked className="w-4 h-4 accent-[#D4A017]" />
-                    <span className="text-[#F8FAFC] text-xs">Competitive Intelligence</span>
-                  </label>
-                  <label className="flex items-center gap-3 cursor-pointer">
-                    <input type="checkbox" className="w-4 h-4 accent-[#D4A017]" />
-                    <span className="text-[#F8FAFC] text-xs">Regulatory & Compliance Signals</span>
-                  </label>
-                </div>
+              <p className="text-[#F8FAFC] font-semibold text-xs uppercase">Intelligence Scope</p>
+              <div className="space-y-3">
+                <label className="flex items-center gap-3 cursor-pointer">
+                  <input type="checkbox" defaultChecked className="w-4 h-4 accent-[#D4A017]" />
+                  <span className="text-[#F8FAFC] text-xs">News & Media Monitoring</span>
+                </label>
+                <label className="flex items-center gap-3 cursor-pointer">
+                  <input type="checkbox" defaultChecked className="w-4 h-4 accent-[#D4A017]" />
+                  <span className="text-[#F8FAFC] text-xs">Social Media & Web Mentions</span>
+                </label>
+                <label className="flex items-center gap-3 cursor-pointer">
+                  <input type="checkbox" defaultChecked className="w-4 h-4 accent-[#D4A017]" />
+                  <span className="text-[#F8FAFC] text-xs">Competitive Intelligence</span>
+                </label>
               </div>
-              <p className="text-[#94A3B8] text-xs">Select the data streams you want monitored for this campaign.</p>
             </div>
           )}
 
           {currentStep === 3 && (
             <div className="space-y-5">
-              <div className="bg-[#1E1E2E] rounded-lg p-4 border border-[#252535] space-y-3">
-                <p className="text-[#F8FAFC] font-semibold text-xs uppercase">Campaign Summary</p>
+              <div className="bg-[#1E1E2E] rounded-lg p-4 border border-[#252535]">
+                <p className="text-[#F8FAFC] font-semibold text-xs uppercase mb-3">Campaign Summary</p>
                 <div className="space-y-2 text-xs">
                   <div className="flex justify-between items-center py-2 border-b border-[#252535]">
                     <span className="text-[#94A3B8]">Brand:</span>
@@ -330,16 +322,15 @@ export function InitiateCampaignModal({ isOpen, onClose }: InitiateCampaignModal
                   </div>
                 </div>
               </div>
-              <p className="text-[#94A3B8] text-xs">Review campaign parameters before activation.</p>
             </div>
           )}
         </div>
 
         {/* Footer Buttons */}
-        <div className="flex items-center justify-between gap-3 p-6 border-t border-[#1E1E2E] bg-[#12121A]">
+        <div className="flex items-center justify-between gap-3 p-6 border-t border-[#1E1E2E]">
           <button 
             onClick={handleClose} 
-            className="px-4 py-2 border border-[#1E1E2E] text-[#F8FAFC] rounded-lg font-semibold hover:bg-[#1E1E2E] transition-colors text-xs"
+            className="px-4 py-2 border border-[#1E1E2E] text-[#F8FAFC] rounded-lg font-semibold hover:bg-[#1E1E2E] text-xs"
           >
             Cancel
           </button>
@@ -351,10 +342,9 @@ export function InitiateCampaignModal({ isOpen, onClose }: InitiateCampaignModal
                 setCurrentStep(currentStep + 1) 
               } 
             }} 
-            className="px-6 py-2 bg-[#D4A017] hover:bg-[#E6B420] text-[#0A0A0F] rounded-lg font-semibold transition-colors text-xs flex items-center gap-2"
+            className="px-6 py-2 bg-[#D4A017] hover:bg-[#E6B420] text-[#0A0A0F] rounded-lg font-semibold text-xs"
           >
-            {currentStep === 3 ? 'Launch Campaign' : 'Next Step'}
-            {currentStep < 3 && <span>→</span>}
+            {currentStep === 3 ? 'Launch' : 'Next Step'}
           </button>
         </div>
       </div>
