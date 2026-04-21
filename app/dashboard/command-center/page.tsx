@@ -1,8 +1,8 @@
 'use client'
 
-import { AlertCircle, TrendingUp, Eye, Clock, Plus, Download } from 'lucide-react'
+import { AlertCircle, TrendingUp, Eye, Plus } from 'lucide-react'
 import { useState } from 'react'
-import { BRANDS, RECENT_ALERTS } from '@/lib/constants'
+import { BRANDS } from '@/lib/constants'
 import { InitiateCampaignModal } from '@/components/dashboard/modals'
 import { 
   handleUpgradeAccess, 
@@ -37,17 +37,17 @@ export default function CommandCenterPage() {
 
   return (
     <div className="bg-[#0A0A0F] min-h-screen">
-      {/* HEADER - ONLY: + NEW CAMPAIGN BUTTON */}
+      {/* HEADER - ONLY ONE: + NEW CAMPAIGN BUTTON */}
       <div className="border-b border-[#1E1E2E] px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
           <div>
             <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-[#F8FAFC]">GLOBAL COMMAND CENTER</h1>
             <p className="text-[#94A3B8] mt-2 text-sm sm:text-base">Real-time narrative intelligence & systemic risk monitoring.</p>
           </div>
-          {/* ONLY THIS BUTTON - Remove Export Button */}
+          {/* ONLY ONE BUTTON HERE */}
           <button 
             onClick={() => setShowCampaignModal(true)}
-            className="px-4 sm:px-6 py-2 sm:py-3 bg-[#D4A017] hover:bg-[#E6B420] text-[#0A0A0F] rounded-lg font-semibold transition-colors text-sm flex items-center justify-center gap-2"
+            className="px-4 sm:px-6 py-2 sm:py-3 bg-[#D4A017] hover:bg-[#E6B420] text-[#0A0A0F] rounded-lg font-semibold transition-colors text-sm flex items-center justify-center gap-2 whitespace-nowrap"
           >
             <Plus className="w-4 h-4" />
             + New Campaign
@@ -55,7 +55,7 @@ export default function CommandCenterPage() {
         </div>
       </div>
 
-      {/* Main Content - Rest of page stays the same */}
+      {/* Main Content */}
       <div className="p-4 sm:p-6 lg:p-8">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
           {/* Left Section - Alerts & Metrics */}
@@ -147,13 +147,14 @@ export default function CommandCenterPage() {
           </div>
         </div>
 
-        {/* Agency Portfolio Section */}
+        {/* Agency Portfolio Section - NO EXTRA BUTTON HERE */}
         <div>
           <div className="flex items-center justify-between mb-6">
             <div>
               <h2 className="text-lg sm:text-xl font-bold text-[#F8FAFC]">AGENCY PORTFOLIO</h2>
               <p className="text-[#94A3B8] text-sm mt-1">All tracked brands and their performance metrics</p>
             </div>
+            {/* REMOVED: Extra + New Report button that was here */}
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
