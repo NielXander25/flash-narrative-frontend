@@ -40,6 +40,66 @@ export default function DashboardPage() {
   }
 
   return (
+    <div className="flex flex-col h-full w-full">
+      <div className="bg-[#12121A] border-b border-[#1E1E2E] px-4 sm:px-6 lg:px-8 py-4 sm:py-6">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 sm:gap-6 mb-6">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4 flex-1 w-full sm:w-auto">
+            <div>
+              <label className="text-[#94A3B8] text-xs font-semibold uppercase mb-2 block">
+                Brand Name
+              </label>
+              <input
+                type="text"
+                placeholder="e.g. Zenith Bank"
+                className="bg-[#0A0A0F] border border-[#1E1E2E] rounded-lg px-4 py-2.5 text-[#F8FAFC] placeholder-[#5B8FD4] text-sm focus:outline-none focus:border-[#D4A017] focus:ring-1 focus:ring-[#D4A017]"
+              />
+            </div>
+            <div>
+              <label className="text-[#94A3B8] text-xs font-semibold uppercase mb-2 block">
+                Competitors
+              </label>
+              <input
+                type="text"
+                placeholder="e.g. GTBank, Access"
+                className="bg-[#0A0A0F] border border-[#1E1E2E] rounded-lg px-4 py-2.5 text-[#F8FAFC] placeholder-[#5B8FD4] text-sm focus:outline-none focus:border-[#D4A017] focus:ring-1 focus:ring-[#D4A017]"
+              />
+            </div>
+            <div>
+              <label className="text-[#94A3B8] text-xs font-semibold uppercase mb-2 block">
+                Date Range
+              </label>
+              <input
+                type="date"
+                className="bg-[#0A0A0F] border border-[#1E1E2E] rounded-lg px-4 py-2.5 text-[#F8FAFC] text-sm focus:outline-none focus:border-[#D4A017] focus:ring-1 focus:ring-[#D4A017]"
+              />
+            </div>
+          </div>
+
+          <div className="flex flex-col sm:flex-row items-start sm:items-end gap-2 sm:gap-3 w-full sm:w-auto">
+            <Button
+              onClick={handleExportPDF}
+              disabled={isExporting}
+              className="w-full sm:w-auto bg-[#D4A017] hover:bg-[#E6B420] text-[#0A0A0F] font-semibold h-10 flex items-center justify-center gap-2 disabled:opacity-50 text-sm"
+            >
+              <FileText className="w-4 h-4" />
+              PDF
+            </Button>
+            <Button
+              onClick={handleExportExcel}
+              disabled={isExporting}
+              variant="outline"
+              className="w-full sm:w-auto border-[#1E1E2E] text-[#D4A017] hover:bg-[#1E1E2E] h-10 flex items-center justify-center gap-2 disabled:opacity-50 text-sm"
+            >
+              <Download className="w-4 h-4" />
+              Excel
+            </Button>
+            <div className="w-10 h-10 rounded-full bg-[#D4A017] flex items-center justify-center flex-shrink-0">
+              <span className="text-[#0A0A0F] font-bold text-sm">U</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <div className="flex-1 overflow-auto">
         <div className="p-4 sm:p-6 lg:p-8 space-y-6 sm:space-y-8">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
@@ -63,11 +123,6 @@ export default function DashboardPage() {
               unit="%"
               sentiment="positive"
             />
-            <KPICard
-              label="Total Reach"
-              value="1.2M"
-              change={18}
-              sentiment="positive"
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
