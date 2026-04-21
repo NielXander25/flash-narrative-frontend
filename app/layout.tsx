@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { Geist, Geist_Mono } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
+import { Toaster } from 'sonner'
 import './globals.css'
 
 const _geist = Geist({ subsets: ["latin"] });
@@ -42,6 +43,22 @@ export default function RootLayout({
       </head>
       <body className="font-sans antialiased">
         {children}
+        <Toaster 
+          position="top-right"
+          richColors
+          closeButton
+          theme="dark"
+          toastOptions={{
+            classNames: {
+              toast: 'bg-[#12121A] border border-[#1E1E2E] text-[#F8FAFC]',
+              title: 'text-sm font-semibold',
+              description: 'text-xs text-[#94A3B8]',
+              success: 'border-l-4 border-l-[#2ECC8A]',
+              error: 'border-l-4 border-l-[#E84242]',
+              info: 'border-l-4 border-l-[#5B8FD4]',
+            },
+          }}
+        />
         {process.env.NODE_ENV === 'production' && <Analytics />}
       </body>
     </html>

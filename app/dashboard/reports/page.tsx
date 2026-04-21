@@ -2,7 +2,6 @@
 
 import { useState } from 'react'
 import { Plus, Download, FileText, MoreVertical, Send, Share2 } from 'lucide-react'
-import { SendReportModal } from '@/components/dashboard/modals'
 import { 
   handleExportReport, 
   handleDownloadReport, 
@@ -13,7 +12,6 @@ import {
 } from '@/lib/button-handlers'
 
 export default function ReportsPage() {
-  const [showReportModal, setShowReportModal] = useState(false)
   const [showGenerateModal, setShowGenerateModal] = useState(false)
 
   const reports = [
@@ -164,12 +162,6 @@ export default function ReportsPage() {
           )}
         </div>
       </div>
-
-      {/* Modals */}
-      <SendReportModal 
-        isOpen={showReportModal} 
-        onClose={() => setShowReportModal(false)} 
-      />
     </div>
   )
 }
