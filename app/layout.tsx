@@ -1,4 +1,4 @@
-import type { Metadata } from 'next'
+import type { Metadata, Viewport } from 'next'
 import { Geist, Geist_Mono } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
 import './globals.css'
@@ -9,7 +9,6 @@ const _geistMono = Geist_Mono({ subsets: ["latin"] });
 export const metadata: Metadata = {
   title: 'Flash Narrative — Enterprise PR Intelligence',
   description: 'Real-time PR Intelligence Platform for Media Monitoring, Reputation Management, and Crisis Detection',
-  themeColor: '#D4A017',
   icons: {
     icon: [
       { url: '/logo.png', type: 'image/png', sizes: '192x192' },
@@ -18,6 +17,12 @@ export const metadata: Metadata = {
     apple: '/logo.png',
     shortcut: '/logo.png',
   },
+}
+
+export const viewport: Viewport = {
+  themeColor: '#D4A017',
+  width: 'device-width',
+  initialScale: 1,
 }
 
 export default function RootLayout({
