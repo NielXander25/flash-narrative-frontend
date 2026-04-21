@@ -8,6 +8,8 @@ dist/
 build/
 out/
 public/build/
+.vercel/
+next.user-config.*
 
 # Environment variables
 .env.local
@@ -32,3 +34,7 @@ Thumbs.db
 coverage/
 .nyc_output/
 ```
+# Common ignores
+node_modules
+.next/
+.DS_Store
