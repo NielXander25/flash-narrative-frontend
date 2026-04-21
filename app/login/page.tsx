@@ -1,5 +1,6 @@
 'use client'
 
+import { useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { Mail, Check } from 'lucide-react'
 import Image from 'next/image'
@@ -7,6 +8,7 @@ import { useRouter } from 'next/navigation'
 
 export default function LoginPage() {
   const router = useRouter()
+  const [authMode, setAuthMode] = useState<'signin' | 'signup'>('signin')
 
   const handleGoogleSSO = () => {
     router.push('/dashboard/command-center')
@@ -178,7 +180,7 @@ export default function LoginPage() {
         </div>
       </div>
 
-      {/* Right Panel - Login Form */}
+      {/* Right Panel - Login Form with Tabs */}
       <div className="w-full lg:w-1/2 flex items-center justify-center p-4 sm:p-6 bg-[#0A0A0F]">
         <div className="w-full max-w-md">
           <div className="lg:hidden mb-6 sm:mb-8">
@@ -197,39 +199,121 @@ export default function LoginPage() {
             </div>
           </div>
 
-          <div className="bg-[#12121A] rounded-lg p-6 sm:p-8 border border-[#1E1E2E]">
-            <h2 className="text-xl sm:text-2xl font-bold text-[#F8FAFC] mb-2">Welcome Back</h2>
-            <p className="text-[#94A3B8] mb-6 sm:mb-8 text-sm">Sign in to your enterprise dashboard</p>
-
-            <Button
-              onClick={handleGoogleSSO}
-              className="w-full bg-[#D4A017] hover:bg-[#E6B420] text-[#0A0A0F] font-semibold h-10 sm:h-11 rounded-lg flex items-center justify-center gap-3 transition-colors text-sm sm:text-base"
-            >
-              <Mail className="w-4 sm:w-5 h-4 sm:h-5" />
-              Continue with Google
-            </Button>
-
-            {/* Divider */}
-            <div className="relative my-8">
-              <div className="absolute inset-0 flex items-center">
-                <div className="w-full border-t border-[#1E1E2E]"></div>
-              </div>
-              <div className="relative flex justify-center text-sm">
-                <span className="px-2 bg-[#12121A] text-[#94A3B8]">OR</span>
-              </div>
+          <div className="bg-[#12121A] rounded-lg border border-[#1E1E2E] overflow-hidden">
+            {/* Tab Navigation */}
+            <div className="flex border-b border-[#1E1E2E]">
+              <button
+                onClick={() => setAuthMode('signin')}
+                className={`flex-1 py-4 px-6 font-semibold text-sm transition-all relative ${
+                  authMode === 'signin' 
+                    ? 'text-[#D4A017]' 
+                    : 'text-[#94A3B8] hover:text-[#F8FAFC]'
+                }`}
+              >
+                Sign In
+                {authMode === 'signin' && (
+                  <div className="absolute bottom-0 left-0 right-0 h-1 bg-[#D4A017]"></div>
+                )}
+              </button>
+              <button
+                onClick={() => setAuthMode('signup')}
+                className={`flex-1 py-4 px-6 font-semibold text-sm transition-all relative ${
+                  authMode === 'signup' 
+                    ? 'text-[#D4A017]' 
+                    : 'text-[#94A3B8] hover:text-[#F8FAFC]'
+                }`}
+              >
+                Sign Up
+                {authMode === 'signup' && (
+                  <div className="absolute bottom-0 left-0 right-0 h-1 bg-[#D4A017]"></div>
+                )}
+              </button>
             </div>
 
-            <p className="text-center text-[#94A3B8] text-xs sm:text-sm">
-              SSO provisioned by your administrator
-            </p>
-          </div>
+            {/* Form Content */}
+            <div className="p-6 sm:p-8">
+              {authMode === 'signin' ? (
+                <div className="space-y-6">
+                  <div>
+                    <h2 className="text-xl sm:text-2xl font-bold text-[#F8FAFC] mb-2">Welcome Back</h2>
+                    <p className="text-[#94A3B8] text-sm">Access the Secure Intelligence Gateway</p>
+                  </div>
 
-          <div className="mt-6 sm:mt-8 text-center text-[#94A3B8] text-xs">
-            <p>By signing in, you agree to our{' '}
-              <a href="#" className="text-[#D4A017] hover:text-[#E6B420] underline">
-                Terms of Service
-              </a>
-            </p>
+                  <Button
+                    onClick={handleGoogleSSO}
+                    className="w-full bg-[#D4A017] hover:bg-[#E6B420] text-[#0A0A0F] font-semibold h-11 rounded-lg flex items-center justify-center gap-3 transition-colors text-sm"
+                  >
+                    <Mail className="w-5 h-5" />
+                    Continue with Google
+                  </Button>
+
+                  {/* Divider */}
+                  <div className="relative my-6">
+                    <div className="absolute inset-0 flex items-center">
+                      <div className="w-full border-t border-[#1E1E2E]"></div>
+                    </div>
+                    <div className="relative flex justify-center text-sm">
+                      <span className="px-2 bg-[#12121A] text-[#94A3B8]">ENTERPRISE SSO PROTOCOLS</span>
+                    </div>
+                  </div>
+
+                  <div className="bg-[#1E1E2E] rounded-lg p-4 border border-[#252535]">
+                    <div className="flex gap-3">
+                      <div className="text-[#D4A017] flex-shrink-0">⚠️</div>
+                      <div>
+                        <p className="text-[#F8FAFC] text-xs font-semibold mb-1">SECURITY NOTE</p>
+                        <p className="text-[#94A3B8] text-xs">Flash Narrative is a restricted, invitation-only service verified by your organization's security administrator.</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ) : (
+                <div className="space-y-6">
+                  <div>
+                    <h2 className="text-xl sm:text-2xl font-bold text-[#F8FAFC] mb-2">Create Account</h2>
+                    <p className="text-[#94A3B8] text-sm">Join the intelligence network</p>
+                  </div>
+
+                  <div>
+                    <label className="text-[#F8FAFC] text-xs font-semibold mb-2 block">FULL NAME</label>
+                    <input 
+                      type="text" 
+                      placeholder="Your name"
+                      className="w-full bg-[#1E1E2E] border border-[#252535] rounded-lg px-4 py-3 text-[#F8FAFC] placeholder-[#5B8FD4] focus:outline-none focus:border-[#D4A017] transition-colors"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="text-[#F8FAFC] text-xs font-semibold mb-2 block">CORPORATE EMAIL</label>
+                    <input 
+                      type="email" 
+                      placeholder="your@company.com"
+                      className="w-full bg-[#1E1E2E] border border-[#252535] rounded-lg px-4 py-3 text-[#F8FAFC] placeholder-[#5B8FD4] focus:outline-none focus:border-[#D4A017] transition-colors"
+                    />
+                  </div>
+
+                  <Button
+                    onClick={handleGoogleSSO}
+                    className="w-full bg-[#D4A017] hover:bg-[#E6B420] text-[#0A0A0F] font-semibold h-11 rounded-lg flex items-center justify-center gap-3 transition-colors text-sm"
+                  >
+                    <Mail className="w-5 h-5" />
+                    Sign Up with Google
+                  </Button>
+
+                  <p className="text-center text-[#94A3B8] text-xs">
+                    An invitation code is required. Contact your organization's administrator.
+                  </p>
+                </div>
+              )}
+
+              <div className="mt-6 sm:mt-8 text-center text-[#94A3B8] text-xs">
+                <p>By signing in, you agree to our{' '}
+                  <a href="#" className="text-[#D4A017] hover:text-[#E6B420] underline">
+                    Terms of Service
+                  </a>
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       </div>
