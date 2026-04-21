@@ -5,39 +5,11 @@ import { KPICard } from '@/components/dashboard/kpi-cards'
 import { SentimentChart } from '@/components/dashboard/sentiment-chart'
 import { SOVChart } from '@/components/dashboard/sov-chart'
 import { MentionsTable } from '@/components/dashboard/mentions-table'
-import { Button } from '@/components/ui/button'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
-import { FileText, Download } from 'lucide-react'
 import { MOCK_MENTIONS, SENTIMENT_DATA, SOV_DATA } from '@/lib/constants'
-import { exportToPDF, exportToExcel, downloadBlob } from '@/lib/api'
 
 export default function DashboardPage() {
   const [activeTab, setActiveTab] = useState<'news' | 'social'>('news')
-  const [isExporting, setIsExporting] = useState(false)
-
-  const handleExportPDF = async () => {
-    setIsExporting(true)
-    try {
-      const blob = await exportToPDF({ mentions: MOCK_MENTIONS, sentiment: SENTIMENT_DATA })
-      downloadBlob(blob, 'intelligence-report.pdf')
-    } catch (error) {
-      console.error('Failed to export PDF:', error)
-    } finally {
-      setIsExporting(false)
-    }
-  }
-
-  const handleExportExcel = async () => {
-    setIsExporting(true)
-    try {
-      const blob = await exportToExcel({ mentions: MOCK_MENTIONS, sentiment: SENTIMENT_DATA })
-      downloadBlob(blob, 'intelligence-report.xlsx')
-    } catch (error) {
-      console.error('Failed to export Excel:', error)
-    } finally {
-      setIsExporting(false)
-    }
-  }
 
   return (
     <div className="flex flex-col h-full w-full">
@@ -125,41 +97,40 @@ export default function DashboardPage() {
             />
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
-            <div className="overflow-x-auto">
-              <SentimentChart data={SENTIMENT_DATA} />
-            </div>
-            <div className="overflow-x-auto">
-              <SOVChart data={SOV_DATA} />
-            </div>
-          </div>
-
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
           <div className="overflow-x-auto">
-            <Tabs value={activeTab} onValueChange={(v) => setActiveTab(v as 'news' | 'social')}>
-              <TabsList className="bg-[#12121A] border border-[#1E1E2E] p-1 h-auto rounded-lg flex w-full sm:w-auto">
-                <TabsTrigger
-                  value="news"
-                  className="data-[state=active]:bg-[#D4A017] data-[state=active]:text-[#0A0A0F] text-[#94A3B8] px-3 sm:px-4 py-2 rounded text-xs sm:text-sm font-medium flex-1 sm:flex-none"
-                >
-                  News & Web Coverage
-                </TabsTrigger>
-                <TabsTrigger
-                  value="social"
-                  className="data-[state=active]:bg-[#D4A017] data-[state=active]:text-[#0A0A0F] text-[#94A3B8] px-3 sm:px-4 py-2 rounded text-xs sm:text-sm font-medium flex-1 sm:flex-none"
-                >
-                  Social Media Pulse
-                </TabsTrigger>
-              </TabsList>
-
-              <TabsContent value="news" className="mt-6">
-                <MentionsTable data={MOCK_MENTIONS} activeTab="news" />
-              </TabsContent>
-
-              <TabsContent value="social" className="mt-6">
-                <MentionsTable data={MOCK_MENTIONS} activeTab="social" />
-              </TabsContent>
-            </Tabs>
+            <SentimentChart data={SENTIMENT_DATA} />
           </div>
+          <div className="overflow-x-auto">
+            <SOVChart data={SOV_DATA} />
+          </div>
+        </div>
+
+        <div className="overflow-x-auto">
+          <Tabs value={activeTab} onValueChange={(v) => setActiveTab(v as 'news' | 'social')}>
+            <TabsList className="bg-[#12121A] border border-[#1E1E2E] p-1 h-auto rounded-lg flex w-full sm:w-auto">
+              <TabsTrigger
+                value="news"
+                className="data-[state=active]:bg-[#D4A017] data-[state=active]:text-[#0A0A0F] text-[#94A3B8] px-3 sm:px-4 py-2 rounded text-xs sm:text-sm font-medium flex-1 sm:flex-none"
+              >
+                News & Web Coverage
+              </TabsTrigger>
+              <TabsTrigger
+                value="social"
+                className="data-[state=active]:bg-[#D4A017] data-[state=active]:text-[#0A0A0F] text-[#94A3B8] px-3 sm:px-4 py-2 rounded text-xs sm:text-sm font-medium flex-1 sm:flex-none"
+              >
+                Social Media Pulse
+              </TabsTrigger>
+            </TabsList>
+
+            <TabsContent value="news" className="mt-6">
+              <MentionsTable data={MOCK_MENTIONS} activeTab="news" />
+            </TabsContent>
+
+            <TabsContent value="social" className="mt-6">
+              <MentionsTable data={MOCK_MENTIONS} activeTab="social" />
+            </TabsContent>
+          </Tabs>
         </div>
       </div>
     </div>

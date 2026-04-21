@@ -1,5 +1,29 @@
-export const showNotification = (message: string, type: 'success' | 'error' | 'info' = 'info') => {
-  console.log(`[${type.toUpperCase()}] ${message}`)
+import { toast } from 'sonner'
+
+/**
+ * Show a toast notification to the user
+ * Uses sonner for consistent, professional notifications
+ */
+export const showNotification = (
+  message: string, 
+  type: 'success' | 'error' | 'info' = 'info',
+  duration: number = 3000
+) => {
+  switch (type) {
+    case 'success':
+      toast.success(message, { duration })
+      break
+    case 'error':
+      toast.error(message, { duration })
+      break
+    case 'info':
+    default:
+      toast.info(message, { duration })
+      break
+  }
+  
+  // Also log for debugging
+  console.log(`[NOTIFICATION:${type.toUpperCase()}] ${message}`)
 }
 
 export const handleExportCommandCenter = () => showNotification('Command Center data exported', 'success')

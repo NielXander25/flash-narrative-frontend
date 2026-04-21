@@ -2,7 +2,7 @@
 
 import { useState, useCallback } from 'react'
 import { Sidebar } from '@/components/dashboard/sidebar'
-import { Command, BarChart3, Settings, FileText, Compass, Menu, X, LucideIcon } from 'lucide-react'
+import { Command, BarChart3, Settings, FileText, Compass, Menu, X, LucideIcon, Plus } from 'lucide-react'
 
 interface NavItem {
   label: string
@@ -12,6 +12,7 @@ interface NavItem {
 
 const navItems: NavItem[] = [
   { label: 'Command Center', icon: Compass, href: '/dashboard/command-center' },
+  { label: 'Create Campaign', icon: Plus, href: '/dashboard/create-campaign' },
   { label: 'Intelligence Dashboard', icon: BarChart3, href: '/dashboard' },
   { label: 'Reports', icon: FileText, href: '/dashboard/reports' },
   { label: 'API & Integrations', icon: Command, href: '/dashboard/api' },
