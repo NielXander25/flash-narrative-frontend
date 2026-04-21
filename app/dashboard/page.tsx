@@ -5,19 +5,44 @@ import { KPICard } from '@/components/dashboard/kpi-cards'
 import { SentimentChart } from '@/components/dashboard/sentiment-chart'
 import { SOVChart } from '@/components/dashboard/sov-chart'
 import { MentionsTable } from '@/components/dashboard/mentions-table'
+import { Button } from '@/components/ui/button'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import { FileText, Download } from 'lucide-react'
 import { MOCK_MENTIONS, SENTIMENT_DATA, SOV_DATA } from '@/lib/constants'
+import { exportToPDF, exportToExcel, downloadBlob } from '@/lib/api'
 
 export default function DashboardPage() {
   const [activeTab, setActiveTab] = useState<'news' | 'social'>('news')
+  const [isExporting, setIsExporting] = useState(false)
+
+  const handleExportPDF = async () => {
+    setIsExporting(true)
+    try {
+      const blob = await exportToPDF({ mentions: MOCK_MENTIONS, sentiment: SENTIMENT_DATA })
+      downloadBlob(blob, 'intelligence-report.pdf')
+    } catch (error) {
+      console.error('Failed to export PDF:', error)
+    } finally {
+      setIsExporting(false)
+    }
+  }
+
+  const handleExportExcel = async () => {
+    setIsExporting(true)
+    try {
+      const blob = await exportToExcel({ mentions: MOCK_MENTIONS, sentiment: SENTIMENT_DATA })
+      downloadBlob(blob, 'intelligence-report.xlsx')
+    } catch (error) {
+      console.error('Failed to export Excel:', error)
+    } finally {
+      setIsExporting(false)
+    }
+  }
 
   return (
-    <div className="flex flex-col h-full w-full">
       <div className="flex-1 overflow-auto">
         <div className="p-4 sm:p-6 lg:p-8 space-y-6 sm:space-y-8">
-          
-          {/* UPDATED GRID: Changed to grid-cols-4 for 4 cards */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
             <KPICard
               label="Media Impact Score"
               value={847}
@@ -38,13 +63,11 @@ export default function DashboardPage() {
               unit="%"
               sentiment="positive"
             />
-            {/* NEW CARD: Total Reach */}
             <KPICard
               label="Total Reach"
-              value="1.2M" // Placeholder value, update with real data
+              value="1.2M"
               change={18}
               sentiment="positive"
-            />
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
