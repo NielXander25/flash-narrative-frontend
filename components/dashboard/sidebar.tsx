@@ -65,13 +65,20 @@ interface NavigationMenuProps {
 }
 
 function NavigationMenu({ items, pathname, onNavigate }: NavigationMenuProps) {
+  const isActive = (itemHref: string) => {
+    if (itemHref === '/dashboard') {
+      return pathname === '/dashboard'
+    }
+    return pathname === itemHref || pathname.startsWith(itemHref + '/')
+  }
+
   return (
     <nav className="flex-1 space-y-2 mb-8">
       {items.map((item) => (
         <NavigationLink
           key={item.href}
           item={item}
-          isActive={pathname === item.href || pathname.startsWith(item.href + '/')}
+          isActive={isActive(item.href)}
           onNavigate={onNavigate}
         />
       ))}

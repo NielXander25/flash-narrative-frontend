@@ -64,10 +64,10 @@ export default function ReportsPage() {
           </div>
           <button 
             onClick={() => setShowTemplateModal(true)}
-            className="w-full sm:w-auto flex items-center justify-center gap-2 px-4 sm:px-6 py-2 sm:py-3 bg-[#D4A017] hover:bg-[#E6B420] text-[#0A0A0F] rounded-lg font-semibold transition-colors text-sm"
+            className="w-full sm:w-auto flex items-center justify-center gap-2 px-4 sm:px-6 py-2 sm:py-3 bg-[#D4A017] hover:bg-[#E6B420] text-[#0A0A0F] rounded-lg font-semibold transition-colors text-sm whitespace-nowrap"
           >
-            <Plus className="w-4 sm:w-5 h-4 sm:h-5" />
-            + New Report
+            <Plus className="w-4 sm:w-5 h-4 sm:h-5 flex-shrink-0" />
+            New Report
           </button>
         </div>
       </div>

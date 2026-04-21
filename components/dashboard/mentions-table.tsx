@@ -101,26 +101,15 @@ export function MentionsTable({ data, activeTab }: MentionsTableProps) {
               const sentimentColor = getSentimentColor(mention.sentiment_label)
               return (
                 <TableRow key={mention.id} className="border-b border-[#1E1E2E] hover:bg-[#1E1E2E]/50">
-                  <TableCell className="text-[#94A3B8] text-sm">{mention.source || mention.platform_category}</TableCell>
-                  <TableCell className="text-[#F8FAFC] text-sm font-medium max-w-xs truncate">
-                    {mention.title}
+                  <TableCell className="text-[#94A3B8] text-sm whitespace-nowrap">{mention.source || mention.platform_category}</TableCell>
+                  <TableCell className="text-[#F8FAFC] text-sm font-medium max-w-xs truncate">{mention.title}</TableCell>
+                  <TableCell className="text-[#94A3B8] text-sm max-w-sm truncate">{mention.snippet}</TableCell>
+                  <TableCell className="whitespace-nowrap">
+                    <Badge className={`${sentimentColor.bg} ${sentimentColor.text} border-0 text-xs`}>{mention.sentiment_label}</Badge>
                   </TableCell>
-                  <TableCell className="text-[#94A3B8] text-sm max-w-xs">
-                    <span className="truncate">{mention.snippet}</span>
-                  </TableCell>
-                  <TableCell>
-                    <Badge className={`${sentimentColor.bg} ${sentimentColor.text} border-0`}>
-                      {mention.sentiment_label}
-                    </Badge>
-                  </TableCell>
-                  <TableCell className="text-[#94A3B8] text-sm">{formatDate(mention.published_date)}</TableCell>
-                  <TableCell>
-                    <a
-                      href={mention.id}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-[#D4A017] hover:text-[#E6B420] inline-flex items-center gap-1"
-                    >
+                  <TableCell className="text-[#94A3B8] text-sm whitespace-nowrap">{formatDate(mention.published_date)}</TableCell>
+                  <TableCell className="text-center">
+                    <a href={mention.id} target="_blank" rel="noopener noreferrer" className="text-[#D4A017] hover:text-[#E6B420] inline-flex">
                       <ExternalLink className="w-4 h-4" />
                     </a>
                   </TableCell>

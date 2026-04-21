@@ -1,11 +1,18 @@
 'use client'
 
-import { AlertCircle, TrendingUp, Eye, Clock } from 'lucide-react'
+import { AlertCircle, TrendingUp, Eye, Clock, Plus } from 'lucide-react'
 import { useState } from 'react'
 import { BRANDS, RECENT_ALERTS } from '@/lib/constants'
+import { CampaignModal } from '@/components/dashboard/campaign-modal'
 
 export default function CommandCenterPage() {
   const [selectedBrand, setSelectedBrand] = useState<string | null>(null)
+  const [showCampaignModal, setShowCampaignModal] = useState(false)
+
+  const handleCreateCampaign = (data: any) => {
+    console.log('Campaign created:', data)
+    setShowCampaignModal(false)
+  }
 
   const recentAlerts = [
     {
@@ -31,14 +38,17 @@ export default function CommandCenterPage() {
   return (
     <div className="bg-[#0A0A0F] min-h-screen">
       <div className="border-b border-[#1E1E2E] px-4 sm:px-6 lg:px-8 py-4 sm:py-6">
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
           <div>
             <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-[#F8FAFC]">GLOBAL COMMAND CENTER</h1>
             <p className="text-[#94A3B8] mt-2 text-sm sm:text-base">Real-time monitoring and instant response.</p>
           </div>
-          <button className="w-full sm:w-auto px-4 sm:px-6 py-2 sm:py-3 bg-[#D4A017] hover:bg-[#E6B420] text-[#0A0A0F] rounded-lg font-semibold transition-colors text-sm sm:text-base">
-            + Add Organization
-          </button>
+          <div className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
+            <button onClick={() => setShowCampaignModal(true)} className="flex items-center justify-center gap-2 w-full sm:w-auto px-4 sm:px-6 py-2 sm:py-3 bg-[#D4A017] hover:bg-[#E6B420] text-[#0A0A0F] rounded-lg font-semibold transition-colors text-sm sm:text-base">
+              <Plus className="w-4 h-4" />
+              New Campaign
+            </button>
+          </div>
         </div>
       </div>
 
@@ -157,6 +167,12 @@ export default function CommandCenterPage() {
           </div>
         </div>
       </div>
+
+      <CampaignModal
+        isOpen={showCampaignModal}
+        onClose={() => setShowCampaignModal(false)}
+        onSubmit={handleCreateCampaign}
+      />
     </div>
   )
 }
