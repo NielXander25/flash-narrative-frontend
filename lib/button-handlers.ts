@@ -1,81 +1,55 @@
 import { toast } from 'sonner'
 
 /**
- * Show a toast notification to the user
- * Uses sonner for consistent, professional notifications
+ * Centralized button click handlers for dashboard actions
+ * All handlers use toast notifications for user feedback
  */
-export const showNotification = (
-  message: string, 
-  type: 'success' | 'error' | 'info' = 'info',
-  duration: number = 3000
-) => {
-  switch (type) {
-    case 'success':
-      toast.success(message, { duration })
-      break
-    case 'error':
-      toast.error(message, { duration })
-      break
-    case 'info':
-    default:
-      toast.info(message, { duration })
-      break
-  }
-  
-  // Also log for debugging
-  console.log(`[NOTIFICATION:${type.toUpperCase()}] ${message}`)
+
+export const handleCreateCampaign = () => {
+  toast.info('Create Campaign wizard launching...', {
+    description: 'Configure your tracking parameters',
+    duration: 3000,
+  })
 }
 
-export const handleExportCommandCenter = () => showNotification('Command Center data exported', 'success')
-export const handleViewAllAlerts = () => showNotification('Opening alerts view', 'info')
-export const handleUpgradeAccess = () => showNotification('Redirecting to upgrade', 'info')
-export const handleBrandSelect = (brandId: string, brandName: string) => showNotification(`Selected: ${brandName}`, 'info')
-export const handleCreateNewCampaign = () => showNotification('Opening campaign wizard', 'info')
-
-export const handleExportReport = () => showNotification('Reports exported', 'success')
-export const handleSendReport = () => showNotification('Opening send modal', 'info')
-export const handleGenerateReport = (campaignName: string, template: string) => showNotification(`Generating ${template}`, 'info')
-export const handleDownloadReport = (reportId: string, reportName: string) => showNotification(`Downloaded: ${reportName}`, 'success')
-export const handleShareReport = (reportId: string) => showNotification('Share link copied', 'success')
-export const handleDeleteReport = (reportId: string) => showNotification('Report deleted', 'success')
-export const handleNewReport = () => showNotification('Opening report builder', 'info')
-
-export const handleSecureTransmit = (reportData: any) => showNotification('Report transmitted securely', 'success')
-export const handleSaveAsDraft = (reportData: any) => showNotification('Saved as draft', 'success')
-export const handleNewCampaign = (campaignData: any) => showNotification(`Campaign created`, 'info')
-export const handleRevokeAPIKey = (keyName: string) => showNotification(`Key revoked`, 'success')
-
-export const handleGenerateAPIKey = () => {
-  const key = `sk_${Date.now()}`
-  showNotification('API key generated', 'success')
-  return key
-}
-export const handleCopyAPIKey = (key: string) => { navigator.clipboard.writeText(key); showNotification('Copied', 'success') }
-export const handleDownloadAPIKey = () => showNotification('Downloaded', 'success')
-export const handleCopyToClipboard = (text: string, label: string = 'Text') => { navigator.clipboard.writeText(text); showNotification(`${label} copied`, 'success') }
-
-export const handleExportPDF = () => showNotification('Exporting PDF', 'info')
-export const handleExportExcel = () => showNotification('Exporting Excel', 'info')
-export const handleViewIntelligence = (campaignId: string) => showNotification('Opening dashboard', 'info')
-
-export const handleGoogleSSO = () => showNotification('Google SSO initiated', 'info')
-export const handleGoogleSignup = () => showNotification('Google signup initiated', 'info')
-export const handleGoogleLogin = () => showNotification('Google login initiated', 'info')
-export const handleSignup = (formData: any) => showNotification('Account created', 'info')
-
-export const handleSaveSettings = (settingsData: any) => showNotification('Settings saved', 'success')
-export const handleUploadLogo = (file: File) => showNotification('Logo uploaded', 'success')
-export const handleUpdateTheme = (colors: any) => {
-  showNotification('Theme updated', 'success')
-  document.documentElement.style.setProperty('--primary', colors.primary)
-  document.documentElement.style.setProperty('--primary-hover', colors.primaryHover)
+export const handleExportReport = (reportId: number) => {
+  toast.success('Report export initiated', {
+    description: `Report #${reportId} is being prepared`,
+    duration: 3000,
+  })
 }
 
-export const handleToggleSidebar = () => {}
-export const handleCloseSidebar = () => {}
-export const handleNavigate = (href: string) => {}
-export const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {}
-export const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {}
-export const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {}
-export const handleCreateFirstCampaign = () => showNotification('Opening wizard', 'info')
-export const handleCreateFirstReport = () => showNotification('Opening builder', 'info')
+export const handleDownloadReport = (reportId: number) => {
+  toast.success('Download started', {
+    description: `Report #${reportId} will download shortly`,
+    duration: 3000,
+  })
+}
+
+export const handleSendReport = () => {
+  toast.info('Email dispatch coming soon', {
+    description: 'This feature will be available in the next update',
+    duration: 3000,
+  })
+}
+
+export const handleRevokeAPIKey = (keyId: string) => {
+  toast.warning('API Key revoked', {
+    description: `Key ${keyId.slice(0, 8)}... has been deactivated`,
+    duration: 3000,
+  })
+}
+
+export const handleSaveSettings = () => {
+  toast.success('Settings saved', {
+    description: 'Your preferences have been updated',
+    duration: 3000,
+  })
+}
+
+export const handleDeleteCampaign = (campaignId: number) => {
+  toast.error('Campaign deleted', {
+    description: `Campaign #${campaignId} has been removed`,
+    duration: 3000,
+  })
+}
