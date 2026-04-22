@@ -53,3 +53,36 @@ export const handleDeleteCampaign = (campaignId: number) => {
     duration: 3000,
   })
 }
+
+// --- NEWLY ADDED MISSING FUNCTIONS ---
+
+export const handleBrandSelect = (brand: string) => {
+  toast.success('Brand selected', {
+    description: `Now tracking: ${brand}`,
+    duration: 3000,
+  })
+}
+
+export const handleUpgradeAccess = () => {
+  toast.info('Upgrade Plan', {
+    description: 'Redirecting to upgrade page...',
+    duration: 3000,
+  })
+}
+
+export const handleNewCampaign = () => {
+  toast.info('New Campaign', {
+    description: 'Opening campaign wizard...',
+    duration: 3000,
+  })
+}
+
+export const showNotification = (message: string, type: 'success' | 'error' | 'info' = 'info') => {
+  if (type === 'success') {
+    toast.success(message, { duration: 3000 })
+  } else if (type === 'error') {
+    toast.error(message, { duration: 3000 })
+  } else {
+    toast.info(message, { duration: 3000 })
+  }
+}
