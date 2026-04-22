@@ -4,164 +4,176 @@ import { useState } from 'react'
 import { Plus, Download, FileText, MoreVertical, Send, Share2 } from 'lucide-react'
 import { 
   handleExportReport, 
-  handleDownloadReport, 
-  handleShareReport, 
-  handleDeleteReport,
-  handleGenerateReport,
-  showNotification 
+  handleDownloadReport,
+  handleSendReport
 } from '@/lib/button-handlers'
+import { Button } from '@/components/ui/button'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
+import { Badge } from '@/components/ui/badge'
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip'
+
+// Mock data for demonstration
+const mockReports = [
+  {
+    id: 1,
+    title: 'Zenith Bank Q1 Brand Health Report',
+    type: 'Brand Analysis',
+    date: '2024-03-20',
+    status: 'completed',
+    format: 'PDF',
+    size: '2.4 MB'
+  },
+  {
+    id: 2,
+    title: 'Competitive Landscape - Finance Sector',
+    type: 'Competitor Analysis',
+    date: '2024-03-19',
+    status: 'completed',
+    format: 'Excel',
+    size: '1.8 MB'
+  },
+  {
+    id: 3,
+    title: 'Crisis Alert Summary - March 2024',
+    type: 'Crisis Report',
+    date: '2024-03-18',
+    status: 'processing',
+    format: 'PDF',
+    size: '-'
+  },
+  {
+    id: 4,
+    title: 'Social Media Sentiment Analysis',
+    type: 'Social Pulse',
+    date: '2024-03-17',
+    status: 'completed',
+    format: 'PDF',
+    size: '3.1 MB'
+  }
+]
 
 export default function ReportsPage() {
-  const [showGenerateModal, setShowGenerateModal] = useState(false)
+  const [reports] = useState(mockReports)
 
-  const reports = [
-    {
-      id: 1,
-      campaign: 'Zenith Bank Q2 Reputation',
-      type: 'Draft',
-      createdDate: '21 Jan 2026',
-      dueDate: '31 Jan 2026',
-      status: 'REPORT SENT',
-      statusIcon: '✓',
-      statusColor: 'bg-[#2ECC8A]/20 border-[#2ECC8A] text-[#2ECC8A]',
-      actions: ['view', 'edit', 'delete']
-    },
-    {
-      id: 2,
-      campaign: 'GTBank Product Launch',
-      type: 'Final',
-      createdDate: '18 Jan 2026',
-      dueDate: '25 Jan 2026',
-      status: 'REPORT PENDING',
-      statusIcon: '⏱',
-      statusColor: 'bg-[#E8832A]/20 border-[#E8832A] text-[#E8832A]',
-      actions: ['download', 'share', 'delete']
-    },
-    {
-      id: 3,
-      campaign: 'Dangote Brand Monitor',
-      type: 'Sample',
-      createdDate: '15 Jan 2026',
-      dueDate: '02/02/2026',
-      status: 'IN PROGRESS',
-      statusIcon: '●',
-      statusColor: 'bg-[#5B8FD4]/20 border-[#5B8FD4] text-[#5B8FD4]',
-      actions: ['download', 'share']
-    },
-    {
-      id: 4,
-      campaign: 'MTN Crisis Response',
-      type: 'MTN',
-      createdDate: '12 Jan 2026',
-      dueDate: '20 Jan 2026',
-      status: 'DRAFT',
-      statusIcon: '◯',
-      statusColor: 'bg-[#94A3B8]/20 border-[#94A3B8] text-[#94A3B8]',
-      actions: ['download', 'share']
+  const getStatusColor = (status: string) => {
+    switch (status) {
+      case 'completed':
+        return 'bg-green-500/10 text-green-500 border-green-500/20'
+      case 'processing':
+        return 'bg-blue-500/10 text-blue-500 border-blue-500/20'
+      case 'failed':
+        return 'bg-red-500/10 text-red-500 border-red-500/20'
+      default:
+        return 'bg-gray-500/10 text-gray-500 border-gray-500/20'
     }
-  ]
+  }
 
   return (
-    <div className="bg-[#0A0A0F] min-h-screen">
+    <div className="space-y-6">
       {/* Header */}
-      <div className="border-b border-[#1E1E2E] px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-          <div>
-            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-[#F8FAFC]">Reports Command Center</h1>
-            <p className="text-[#94A3B8] mt-2 text-sm sm:text-base">Build, export and send client presentations.</p>
-          </div>
-          <button 
-            onClick={() => setShowGenerateModal(true)}
-            className="w-full sm:w-auto px-4 sm:px-6 py-2 sm:py-3 bg-[#D4A017] hover:bg-[#E6B420] text-[#0A0A0F] rounded-lg font-semibold transition-colors text-sm flex items-center justify-center gap-2"
-          >
-            <Plus className="w-4 h-4" />
-            + New Report
-          </button>
+      <div className="flex justify-between items-center">
+        <div>
+          <h1 className="text-3xl font-bold text-white">Reports</h1>
+          <p className="text-muted-foreground mt-1">
+            Generate and manage your brand intelligence reports
+          </p>
         </div>
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button 
+                onClick={() => handleSendReport()}
+                disabled
+                className="bg-gradient-to-r from-amber-600 to-amber-700 hover:from-amber-700 hover:to-amber-800"
+              >
+                <Send className="w-4 h-4 mr-2" />
+                Send Report
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>Email dispatch feature coming soon</p>
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
       </div>
 
-      {/* Main Content */}
-      <div className="p-4 sm:p-6 lg:p-8">
-        <div className="max-w-6xl space-y-4">
-          {/* Reports List */}
-          {reports.length > 0 ? (
-            <div className="space-y-3">
-              {reports.map((report) => (
-                <div key={report.id} className="bg-[#12121A] border border-[#1E1E2E] rounded-lg p-4 sm:p-6">
-                  <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-                    <div className="flex-1">
-                      <div className="flex items-start justify-between gap-3 mb-2">
-                        <div>
-                          <h3 className="text-sm sm:text-base font-semibold text-[#F8FAFC]">{report.campaign}</h3>
-                          <p className="text-xs text-[#94A3B8] mt-1">{report.type} • Created {report.createdDate}</p>
-                        </div>
-                        {/* Status Badge - Styled like 2nd screenshot */}
-                        <div className={`px-3 py-1 rounded-full border text-xs font-semibold flex items-center gap-2 whitespace-nowrap ${report.statusColor}`}>
-                          <span>{report.statusIcon}</span>
-                          {report.status}
-                        </div>
-                      </div>
-                      <p className="text-xs text-[#5B8FD4]">Due: {report.dueDate}</p>
-                    </div>
-
-                    {/* Actions */}
-                    <div className="flex items-center gap-2">
-                      {report.actions.includes('download') && (
-                        <button
-                          onClick={() => handleDownloadReport(String(report.id), report.campaign)}
-                          className="p-2 hover:bg-[#1E1E2E] rounded-lg transition-colors"
-                          title="Download"
-                        >
-                          <Download className="w-4 h-4 text-[#5B8FD4]" />
-                        </button>
-                      )}
-                      {report.actions.includes('share') && (
-                        <button
-                          onClick={() => handleShareReport(String(report.id))}
-                          className="p-2 hover:bg-[#1E1E2E] rounded-lg transition-colors"
-                          title="Share"
-                        >
-                          <Share2 className="w-4 h-4 text-[#5B8FD4]" />
-                        </button>
-                      )}
-                      {report.actions.includes('edit') && (
-                        <button
-                          onClick={() => showNotification('Opening editor...', 'info')}
-                          className="p-2 hover:bg-[#1E1E2E] rounded-lg transition-colors"
-                          title="Edit"
-                        >
-                          <FileText className="w-4 h-4 text-[#5B8FD4]" />
-                        </button>
-                      )}
-                      {report.actions.includes('delete') && (
-                        <button
-                          onClick={() => handleDeleteReport(String(report.id))}
-                          className="p-2 hover:bg-[#1E1E2E] rounded-lg transition-colors"
-                          title="Delete"
-                        >
-                          <MoreVertical className="w-4 h-4 text-[#94A3B8]" />
-                        </button>
-                      )}
+      {/* Reports List */}
+      <Card className="border-white/5 bg-black/20">
+        <CardHeader>
+          <div className="flex justify-between items-center">
+            <div>
+              <CardTitle className="text-white">Generated Reports</CardTitle>
+              <CardDescription>
+                Your recently generated intelligence reports
+              </CardDescription>
+            </div>
+            <Button variant="outline" className="border-amber-500/30 text-amber-500 hover:bg-amber-500/10">
+              <Plus className="w-4 h-4 mr-2" />
+              New Report
+            </Button>
+          </div>
+        </CardHeader>
+        <CardContent>
+          <div className="space-y-4">
+            {reports.map((report) => (
+              <div
+                key={report.id}
+                className="flex items-center justify-between p-4 rounded-lg border border-white/5 hover:border-amber-500/30 transition-colors bg-black/20"
+              >
+                <div className="flex items-center space-x-4">
+                  <div className="w-10 h-10 rounded-lg bg-amber-500/10 flex items-center justify-center">
+                    <FileText className="w-5 h-5 text-amber-500" />
+                  </div>
+                  <div>
+                    <h3 className="font-medium text-white">{report.title}</h3>
+                    <div className="flex items-center space-x-2 mt-1">
+                      <Badge variant="outline" className="text-xs border-white/10 text-muted-foreground">
+                        {report.type}
+                      </Badge>
+                      <span className="text-xs text-muted-foreground">{report.date}</span>
+                      <Badge className={`text-xs ${getStatusColor(report.status)}`}>
+                        {report.status}
+                      </Badge>
                     </div>
                   </div>
                 </div>
-              ))}
-            </div>
-          ) : (
-            <div className="text-center py-12">
-              <h3 className="text-[#F8FAFC] font-semibold text-lg mb-2">No reports generated yet.</h3>
-              <p className="text-[#94A3B8] text-sm mb-6">Start by selecting a campaign and clicking "Build" to generate your first intelligence report.</p>
-              <button 
-                onClick={() => setShowGenerateModal(true)}
-                className="px-6 py-2 bg-[#D4A017] hover:bg-[#E6B420] text-[#0A0A0F] rounded-lg font-semibold transition-colors text-sm flex items-center justify-center gap-2 mx-auto"
-              >
-                <Plus className="w-4 h-4" />
-                + New Report
-              </button>
-            </div>
-          )}
-        </div>
-      </div>
+
+                <div className="flex items-center space-x-4">
+                  <div className="text-right">
+                    <div className="text-sm text-white font-medium">{report.format}</div>
+                    <div className="text-xs text-muted-foreground">{report.size}</div>
+                  </div>
+                  
+                  <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                      <Button variant="ghost" size="icon" className="text-muted-foreground hover:text-white">
+                        <MoreVertical className="w-4 h-4" />
+                      </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent align="end" className="bg-[#0A0A0A] border-white/10">
+                      <DropdownMenuItem 
+                        onClick={() => handleExportReport(report.id)}
+                        className="text-muted-foreground hover:text-white hover:bg-white/5"
+                      >
+                        <Share2 className="w-4 h-4 mr-2" />
+                        Export
+                      </DropdownMenuItem>
+                      <DropdownMenuItem 
+                        onClick={() => handleDownloadReport(report.id)}
+                        className="text-muted-foreground hover:text-white hover:bg-white/5"
+                      >
+                        <Download className="w-4 h-4 mr-2" />
+                        Download
+                      </DropdownMenuItem>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
+                </div>
+              </div>
+            ))}
+          </div>
+        </CardContent>
+      </Card>
     </div>
   )
 }
